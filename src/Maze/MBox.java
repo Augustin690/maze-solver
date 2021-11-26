@@ -1,6 +1,7 @@
 package Maze;
 
-public abstract class MBox {
+public abstract class MBox 
+	implements VertexInterface {
 	
 	private int x;
 	private int y;
@@ -18,7 +19,9 @@ public abstract class MBox {
 		return y;
 	}
 	
-	
+	public String getLabel() {
+		
+	}
 	
 
 }

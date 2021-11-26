@@ -1,3 +1,4 @@
+package Dijkstra;
 public interface VertexInterface {
 	
 	public double p(VertexInterface x ,VertexInterface y);

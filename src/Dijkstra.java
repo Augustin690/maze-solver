@@ -1,3 +1,5 @@
+import Dijkstra.PiInterface;
+
 public class Dijkstra {
 	
 	private GraphInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface A, PiInterface pi, PreviousInterface previous) {
