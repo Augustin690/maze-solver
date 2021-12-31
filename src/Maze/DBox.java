@@ -2,8 +2,8 @@ package Maze;
 
 public class DBox extends MBox {
 
-	public DBox(int x, int y) {
-		super(x, y);
+	public DBox(Maze maze,int x, int y) {
+		super(maze,x, y);
 		// TODO Auto-generated constructor stub
 	}
 	@Override

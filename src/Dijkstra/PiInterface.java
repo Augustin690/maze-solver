@@ -4,7 +4,7 @@ package Dijkstra;
 
 public interface PiInterface {
 	
-	public double pi(Vertex x);
+	public double pi(VertexInterface x);
 	//donne le plus court chemin de r à x (minimise la fct p?)
 	
 	
