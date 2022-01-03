@@ -7,6 +7,7 @@ import Dijkstra.VertexInterface;
 public class Maze 
 	implements GraphInterface {
 	
+
 	public int width;
 	public int length;
 
@@ -16,11 +17,7 @@ public class Maze
 	ArrayList<MBox> mboxesList = new ArrayList<MBox>();
 	//ajouter les cases en faisant .add?
 	
-	public MBox getMbox() {
-		int x = MBox.getX();
-		int y = MBox.getY();
-		return MBox(x,y);
-	}
+
 	
 	{
 		MBox[][] boxes = null;
@@ -38,10 +35,15 @@ public class Maze
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		for (int i=0; i<width;i++) {
 			for (int j=0;j<length;j++) {
-				arrays.add(VertexInterface);
+				arrays.add(Mbox(i,j));
 			}
 		}
 		return arrays;
+	}
+
+	private VertexInterface Mbox(int i, int j) {
+
+		return null;
 	}
 
 	@Override
@@ -52,8 +54,12 @@ public class Maze
 
 	@Override
 	public int getWeight(VertexInterface src, VertexInterface dst) {
-		// TODO Auto-generated method stub
+	// TODO 
 		return 0;
+	}
+	
+	public final void initFromTextFile(String fileName) {
+		// TODO
 	}
 
 }

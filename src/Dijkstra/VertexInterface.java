@@ -8,11 +8,7 @@ public interface VertexInterface {
 	
 	public boolean isSuccessor(VertexInterface x, VertexInterface y);
 	
-	public static String getLabel() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	//??
+	public static String getLabel();
 	
 	
 

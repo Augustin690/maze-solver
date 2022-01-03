@@ -2,6 +2,7 @@ package Dijkstra;
 
 import java.util.ArrayList;
 
+
 public interface GraphInterface {
 	
 	public GraphInterface buildGraph();
@@ -12,6 +13,9 @@ public interface GraphInterface {
 	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) ;
 	
 	public int getWeight(VertexInterface src,VertexInterface dst) ;
+
+
+
 	
 	
 	

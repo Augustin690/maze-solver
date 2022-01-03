@@ -1,12 +1,14 @@
 package Maze;
 
+import Dijkstra.ASetInterface;
+import Dijkstra.VertexInterface;
+
 public class DBox extends MBox {
 
 	public DBox(Maze maze,int x, int y) {
 		super(maze,x, y);
 		// TODO Auto-generated constructor stub
 	}
-	@Override
 	public int getX() {
 		return x;
 		}
@@ -35,6 +37,21 @@ public class DBox extends MBox {
 		}
 	    
 		
+	}
+	@Override
+	public double p(VertexInterface x, VertexInterface y) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public boolean isInA(VertexInterface x, ASetInterface A) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isSuccessor(VertexInterface x, VertexInterface y) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	
