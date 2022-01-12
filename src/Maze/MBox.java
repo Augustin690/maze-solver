@@ -1,34 +1,56 @@
 package Maze;
 
+import Dijkstra.ASetInterface;
 import Dijkstra.VertexInterface;
 
-public abstract class MBox 
+public class MBox 
 	implements VertexInterface {
 	
-	private Maze maze;
-	private static int x;
-	private static int y;
-	private String[][] strings;
-	
-	public MBox(Maze maze,int x, int y) {
+	protected int x;
+	protected int y;
+	public String label;
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public MBox(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.maze = maze;
+		this.label = label;
+		
+		// Constructor for the type MBox, x and y are its coordinates in the Maze which is basically a matrix of MBox
 	}
-	
-	public static int getX() {
+
+	public int getX() {
 		return x;
 		}
 	
-	public static int getY() {
+	public int getY() {
 		return y;
 	}
 	
 	public String getLabel() {
-		strings = null;
-		return strings [getX()][getY()];
+		return label ;
 		
 	}
-	
+
+	@Override
+	public boolean isInA(VertexInterface x, ASetInterface A) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isSuccessor(VertexInterface x, VertexInterface y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
 
 }

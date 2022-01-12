@@ -1,65 +1,91 @@
 package Maze;
 import java.util.ArrayList;
-
+import java.io.*;
 import Dijkstra.GraphInterface;
 import Dijkstra.VertexInterface;
+import Maze.MBox;
 
-public class Maze 
-	implements GraphInterface {
-	
+public class Maze
 
-	public int width;
-	public int length;
+  extends ArrayList<ArrayList<MBox>>
 
-	public Maze(int width,int length) {
-		String [][] maze = new String[width][length];
-	}
-	ArrayList<MBox> mboxesList = new ArrayList<MBox>();
-	//ajouter les cases en faisant .add?
-	
+  implements GraphInterface {
 
-	
-	{
-		MBox[][] boxes = null;
-		boxes[0][0] = new DBox(this,0,0);
-	}
+	private int width;
+	private int length;
 
-	@Override
-	public GraphInterface buildGraph() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	ArrayList<ArrayList<MBox>> boxes;
+
+
 
 	@Override
 	public ArrayList<VertexInterface> getAllVertices() {
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		for (int i=0; i<width;i++) {
 			for (int j=0;j<length;j++) {
-				arrays.add(Mbox(i,j));
+				MBox boxij = new MBox(i,j);
+				arrays.add(boxij);
 			}
 		}
 		return arrays;
 	}
 
-	private VertexInterface Mbox(int i, int j) {
-
-		return null;
-	}
-
 	@Override
 	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
+		MBox box = (MBox)vertex ;
+		int x = box.getX();
+		int y = box.getY();
+		
+		if (box.getLabel().contentEquals("W")) {                //a wall cannot have any successors
+			return null;
+		}
+		else {                                                // the vertex is not a wall 
+			for (int i = x-1; i <= x+1; i++) {
+				for (int j = y-1 ; j <= y+1; j++) {
+					MBox boxij = new MBox(i,j);
+					while (boxij.getLabel().compareTo("W")!=0) {   //ensuring the neighbors are not walls nor vertex itself
+						while(i != x &&  j != y) {
+							arrays.add(boxij);}                    //adding the successors of vertex (the neighbors that are not walls nor vertex) to the list
+						}
+					}
+				}
+		}
+		return arrays;
 	}
 
 	@Override
 	public int getWeight(VertexInterface src, VertexInterface dst) {
+		MBox boxsrc = (MBox) src;
+		MBox boxdst = (MBox) dst;
+		
+		
 	// TODO 
 		return 0;
 	}
 	
-	public final void initFromTextFile(String fileName) {
-		// TODO
+	public final void initFromTextFile(String fileName) throws IOException {
+	      // On crée un  Reader pour lire le fichier.
+        Reader reader = new FileReader(fileName);
+
+        // On crée un buffered reader de taille par défaut
+        BufferedReader br = new BufferedReader(reader);
+    
+        String line = null;
+        
+        Maze maze = (Maze) boxes;
+        
+        while((line = br.readLine())!= null) {
+            maze.add(line); 
+        }
+        br.close();
+    }
+	public final void saveToTextFile(String fileName) {
+	
+		
+	}
+		
+		
 	}
 
-}
+
