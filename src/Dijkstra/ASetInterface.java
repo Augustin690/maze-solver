@@ -2,17 +2,16 @@ package Dijkstra;
 
 
 public interface ASetInterface {
-	//recherche de methodes a implementer
-
-	public ASetInterface initASet(VertexInterface r);
-	//pour initialiser A au début du programme (utile?)
 	
 	public ASetInterface union(VertexInterface x);
-	//pour réaliser l'union de A et de pivot à la fin de la boucle
+	//in order to add a vertex to A
 	
 	public VertexInterface searchMin();
-	//pour chercher y non dans A avec pi(y) minimum
+	//to search y not in A with pi(y) minimal
 	
+	public boolean isInA(VertexInterface x);
+	//returns true  is x is in A
+
 	
 	
 	

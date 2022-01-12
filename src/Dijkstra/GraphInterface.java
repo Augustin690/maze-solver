@@ -13,20 +13,15 @@ public interface GraphInterface {
 	
 	public int getWeight(VertexInterface src,VertexInterface dst) ;
 	//Returns the weight of the path between the vertices src and dst
+	
+	public boolean isInG(VertexInterface x);
+	//returns true  is x is in g
+	
+	public int getNumber();
+	//returns the number of vertices in g
 
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	}
+}
 		
 
 
