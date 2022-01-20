@@ -84,6 +84,18 @@ public class Maze
 	
 		
 	}
+
+	@Override
+	public boolean isInG(VertexInterface x) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getNumber() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 		
 		
 	}

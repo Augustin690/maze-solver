@@ -51,6 +51,12 @@ public class MBox
 		return false;
 	}
 
+	@Override
+	public boolean isSuccessor(VertexInterface x) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 
 
 }
