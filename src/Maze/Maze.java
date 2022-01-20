@@ -13,6 +13,7 @@ public class Maze
 	private int depth = 10;
 
 	MBox[][] boxes = new MBox[width][depth];
+	private Maze maze;
 
 	@Override
 	public ArrayList<VertexInterface> getAllVertices() {                        //returns the list of all the vertices (Mboxes) that make the maze
@@ -62,7 +63,7 @@ public class Maze
 		}
 	}
 	
-	public final void initFromTextFile(String fileName) throws IOException {  //trying to turn a method that reads the file into one that constructs a maze from it
+	public final void initFromTextFile(String fileName) throws IOException, MazeReadingException {  //trying to turn a method that reads the file into one that constructs a maze from it
 	      
         Reader reader = new FileReader(fileName);  //creating reader to read the text file
         BufferedReader br = new BufferedReader(reader); //creating a default size bufferedreader 
@@ -85,6 +86,9 @@ public class Maze
         		if (line.charAt(i) == 'A') {
         			boxes[i][j] = new ABox(i,j) ;
         			}
+        		if (line.charAt(i)!= 'W' && line.charAt(i) != 'E'&& line.charAt(i) != 'D' && line.charAt(i)!= 'A' ) {
+        			throw new MazeReadingException(fileName,89,"invalid file");
+        		}
         	}
         	j++;
                                                    
@@ -93,10 +97,44 @@ public class Maze
     }
 
 	
-	public final void saveToTextFile(String fileName) {           //method that will save the Maze into a text file "fileName"
-	
+	public final void saveToTextFile(String fileName) throws IOException, MazeReadingException {  //method that will save the Maze into a text file "fileName"
 		
-	}
+		PrintWriter pw = null;
+		
+		try {
+			pw = new PrintWriter(fileName);
+			
+			for(int i = 0; i < width; i++) {
+				
+				for(int j =0; j < depth; j++) {
+					
+					if(boxes[i][j].getLabel().contentEquals("W")) {
+						pw.print("W");
+					}
+					if(boxes[i][j].getLabel().contentEquals("E")) {
+						pw.print("E");
+					}
+					if(boxes[i][j].getLabel().contentEquals("A")) {
+						pw.print("A");
+					}
+					if(boxes[i][j].getLabel().contentEquals("D")) {
+						pw.print("D");
+					}
+				
+				}
+				
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			}
+		finally {
+			try {
+				pw.close();
+			} catch (Exception e){}
+		}
+		
+}
 
 	@Override
 	public boolean isInG(VertexInterface x) {

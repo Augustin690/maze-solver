@@ -9,6 +9,7 @@ public class MazeReadingException extends Exception {
 
 	public MazeReadingException(String fileName, int line,String message) {
 		
+		super(message + fileName + line);
 		
 	}
 
