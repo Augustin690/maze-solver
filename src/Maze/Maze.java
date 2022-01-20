@@ -7,22 +7,18 @@ import Maze.MBox;
 
 public class Maze
 
-  extends ArrayList<ArrayList<MBox>>
-
   implements GraphInterface {
 
-	private int width;
-	private int length;
+	private int width = 10;
+	private int depth = 10;
 
-	ArrayList<ArrayList<MBox>> boxes;
-
-
+	MBox[][] boxes = new MBox[width][depth];
 
 	@Override
 	public ArrayList<VertexInterface> getAllVertices() {                        //returns the list of all the vertices (Mboxes) that make the maze
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		for (int i=0; i<width;i++) {
-			for (int j=0;j<length;j++) {
+			for (int j=0;j<depth;j++) {
 				MBox boxij = new MBox(i,j);
 				arrays.add(boxij);
 			}
@@ -31,16 +27,16 @@ public class Maze
 	}
 
 	@Override
-	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {        //returns the list of the vertices that are accessible starting form  "vertex" (basically its neighbors that are not walls)
+	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {  //returns the list of the vertices that are accessible starting form  "vertex" (basically its neighbors that are not walls)
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		MBox box = (MBox)vertex ;
 		int x = box.getX();
 		int y = box.getY();
 		
-		if (box.getLabel().contentEquals("W")) {                //a wall cannot have any successors
+		if (box.getLabel().contentEquals("W")) {    //a wall cannot have any successors
 			return null;
 		}
-		else {                                                // the vertex is not a wall 
+		else {                                    // the vertex is not a wall 
 			for (int i = x-1; i <= x+1; i++) {
 				for (int j = y-1 ; j <= y+1; j++) {
 					MBox boxij = new MBox(i,j);
@@ -55,31 +51,48 @@ public class Maze
 	}
 
 	@Override
-	public int getWeight(VertexInterface src, VertexInterface dst) {         //Method that will return the weight of an arc between 2 side-to-side Vertices (MBoxes): 1 if they are not walls (WBox), plus infinity if one of them is
+	public double getWeight(VertexInterface src, VertexInterface dst) {   //Method that will return the weight of an arc between 2 side-to-side Vertices (MBoxes): 1 if they are not walls (WBox), plus infinity if one of them is
 		MBox boxsrc = (MBox) src;
 		MBox boxdst = (MBox) dst;
-		
-		
-	// TODO 
-		return 0;
+		if (src.getLabel().contentEquals("W") | dst.getLabel().contentEquals("W")) {
+			return Double.POSITIVE_INFINITY;
+		}
+		else {
+			return 1;
+		}
 	}
 	
 	public final void initFromTextFile(String fileName) throws IOException {  //trying to turn a method that reads the file into one that constructs a maze from it
 	      
         Reader reader = new FileReader(fileName);  //creating reader to read the text file
-
-        
         BufferedReader br = new BufferedReader(reader); //creating a default size bufferedreader 
-    
         String line = null;  //initializing the String "line" that will represent the lines of the text file
         
-        Maze maze = (Maze) boxes;  // creating an object of type Maze which is also a matrix of MBox
-        
-        while((line = br.readLine())!= null) {
-            maze.add(line);                       // I want to add each line of the file to the maze but you cannot add strings to a matrix of MBox: I have to figure that out
+        while((line = br.readLine())!= null) { // I want to add each line of the file to the maze but you cannot add strings to a matrix of MBox: I have to figure that out --> gotta use getLabel() method
+        	int j = 0;
+        	
+        	for(int i = 0; i<line.length();i++) {
+        		
+        		if (line.charAt(i) == 'W') {
+        			boxes[i][j] = new WBox(i,j) ;
+        	         }
+        		if (line.charAt(i) == 'E') {
+        			boxes[i][j] = new EBox(i,j) ; 
+        			} 
+        		if (line.charAt(i) == 'D') {
+        			boxes[i][j] = new DBox(i,j) ;
+        			} 
+        		if (line.charAt(i) == 'A') {
+        			boxes[i][j] = new ABox(i,j) ;
+        			}
+        	}
+        	j++;
+                                                   
         }
         br.close();
     }
+
+	
 	public final void saveToTextFile(String fileName) {           //method that will save the Maze into a text file "fileName"
 	
 		
