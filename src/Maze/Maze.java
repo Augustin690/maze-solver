@@ -113,6 +113,7 @@ public class Maze
 			   for(int j =0; j < this.depth; j++) {
 	            	pw.print(maze[j][i].getLabel());
 				}
+			   pw.println();
 			   }
 		 } catch (Exception e) {
 			e.printStackTrace();
