@@ -9,7 +9,17 @@ import Dijkstra.PreviousInterface;
 
 public class Dijkstra {
 	
-	private PreviousInterface dijkstra(GraphInterface g, VertexInterface r, ASetInterface A, PiInterface pi, PreviousInterface previous) {
+	
+	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
+		return null;
+		
+	}
+	
+	private static PreviousInterface dijkstra(GraphInterface g, 
+			                           VertexInterface r, 
+			                           ASetInterface A, 
+			                           PiInterface pi, 
+			                           PreviousInterface previous) {
 	
 
 		A = A.union(r);   //adding r to A which is supposed to be empty initially

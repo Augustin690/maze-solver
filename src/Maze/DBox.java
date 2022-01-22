@@ -5,7 +5,7 @@ import Dijkstra.VertexInterface;
 
 public class DBox extends MBox {
 	
-	Maze maze = new Maze();
+
 
 	public DBox(int x, int y) {
 		super(x, y);

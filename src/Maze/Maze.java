@@ -9,11 +9,17 @@ public class Maze
 
   implements GraphInterface {
 
-	private int width = 10;
-	private int depth = 10;
-
-	MBox[][] boxes = new MBox[width][depth];
-	private Maze maze;
+	private int width;
+	private int depth;
+	private MBox[][] maze;
+	
+	public Maze(int depth, int width) {
+		this.depth = depth;
+		this.width = width;
+		this.maze = new MBox[depth][width];
+	}
+	
+	
 
 	@Override
 	public ArrayList<VertexInterface> getAllVertices() {                        //returns the list of all the vertices (Mboxes) that make the maze
@@ -65,67 +71,50 @@ public class Maze
 	
 	public final void initFromTextFile(String fileName) throws IOException, MazeReadingException {  //trying to turn a method that reads the file into one that constructs a maze from it
 	      
-        Reader reader = new FileReader(fileName);  //creating reader to read the text file
-        BufferedReader br = new BufferedReader(reader); //creating a default size bufferedreader 
-        String line = null;  //initializing the String "line" that will represent the lines of the text file
+        Reader reader = new FileReader(fileName);
+        BufferedReader br = new BufferedReader(reader);  
+        maze = new MBox[depth][width];
         
-        while((line = br.readLine())!= null) { // I want to add each line of the file to the maze but you cannot add strings to a matrix of MBox: I have to figure that out --> gotta use getLabel() method
-        	int j = 0;
+        for(int j =0; j<width;j++) {
+      
+        	String line = br.readLine();
         	
-        	for(int i = 0; i<line.length();i++) {
+        	for(int i = 0; i<depth;i++) {
         		
-        		if (line.charAt(i) == 'W') {
-        			boxes[i][j] = new WBox(i,j) ;
+        		char label = line.charAt(i);
+        		
+        		if (label == 'W') {
+        			maze[i][j] = new WBox(i,j) ;
         	         }
-        		if (line.charAt(i) == 'E') {
-        			boxes[i][j] = new EBox(i,j) ; 
+        		else if (label == 'E') {
+        			maze[i][j] = new EBox(i,j) ; 
         			} 
-        		if (line.charAt(i) == 'D') {
-        			boxes[i][j] = new DBox(i,j) ;
+        		else if (label == 'D') {
+        			maze[i][j] = new DBox(i,j) ;
         			} 
-        		if (line.charAt(i) == 'A') {
-        			boxes[i][j] = new ABox(i,j) ;
+        		else if (label == 'A') {
+        			maze[i][j] = new ABox(i,j) ;
         			}
-        		if (line.charAt(i)!= 'W' && line.charAt(i) != 'E'&& line.charAt(i) != 'D' && line.charAt(i)!= 'A' ) {
-        			throw new MazeReadingException(fileName,89,"invalid file");
+        		else {
+        			throw new MazeReadingException(fileName,89,"invalid letter");
         		}
         	}
-        	j++;
                                                    
         }
-        br.close();
+        
     }
 
 	
 	public final void saveToTextFile(String fileName) throws IOException, MazeReadingException {  //method that will save the Maze into a text file "fileName"
-		
 		PrintWriter pw = null;
-		
 		try {
 			pw = new PrintWriter(fileName);
-			
-			for(int i = 0; i < width; i++) {
-				
-				for(int j =0; j < depth; j++) {
-					
-					if(boxes[i][j].getLabel().contentEquals("W")) {
-						pw.print("W");
-					}
-					if(boxes[i][j].getLabel().contentEquals("E")) {
-						pw.print("E");
-					}
-					if(boxes[i][j].getLabel().contentEquals("A")) {
-						pw.print("A");
-					}
-					if(boxes[i][j].getLabel().contentEquals("D")) {
-						pw.print("D");
-					}
-				
+			for(int i = 0; i < this.width; i++) {
+			   for(int j =0; j < this.depth; j++) {
+	            	pw.print(maze[j][i].getLabel());
 				}
-				
-			}
-			
-		} catch (Exception e) {
+			   }
+		 } catch (Exception e) {
 			e.printStackTrace();
 			}
 		finally {
@@ -133,7 +122,6 @@ public class Maze
 				pw.close();
 			} catch (Exception e){}
 		}
-		
 }
 
 	@Override

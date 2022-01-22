@@ -1,7 +1,17 @@
 package Dijkstra;
+import java.util.HashSet;
 
-public class ASet implements ASetInterface {
+public class ASet implements ASetInterface
 
+                {
+	
+	public ASet() {
+		new HashSet<VertexInterface>();
+	}
+
+	ASet aset = new ASet() ;
+	
+	
 	@Override
 	public ASetInterface union(VertexInterface x) {
 		// TODO Auto-generated method stub
