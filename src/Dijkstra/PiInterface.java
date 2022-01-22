@@ -4,7 +4,7 @@ package Dijkstra;
 
 public interface PiInterface {
 	
-	public int f(VertexInterface x);
+	public int fPi(VertexInterface x);
 	//implements pi function
 		
 
