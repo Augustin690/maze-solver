@@ -1,14 +1,18 @@
 package Dijkstra;
 import java.util.Hashtable;
 
-public class Pi implements PiInterface {
+public class Pi extends Hashtable<VertexInterface,Integer> implements PiInterface {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4335840190476102104L;
+
+
 	public Pi() {
 		
-		new Hashtable<Integer,VertexInterface>();
+		new Hashtable<VertexInterface,Integer>();
 	}
-
-	Pi pi = new Pi();
 	
 	
 	@Override

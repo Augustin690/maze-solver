@@ -2,32 +2,32 @@ package Maze;
 import java.util.ArrayList;
 import java.io.*;
 import Dijkstra.GraphInterface;
+import Dijkstra.Previous;
 import Dijkstra.VertexInterface;
-import Maze.MBox;
 
 public class Maze
 
   implements GraphInterface {
 
-	private int width;
-	private int depth;
-	private MBox[][] maze;
+	private static int width;
+	private static int depth;
+	private static MBox[][] maze;
 	
 	public Maze(int depth, int width) {
-		this.depth = depth;
-		this.width = width;
-		this.maze = new MBox[depth][width];
+		Maze.depth = depth;
+		Maze.width = width;
+		Maze.maze = new MBox[depth][width];
 	}
 	
-	
 
-	@Override
-	public ArrayList<VertexInterface> getAllVertices() {                        //returns the list of all the vertices (Mboxes) that make the maze
+	public static ArrayList<VertexInterface> getAllVertices() {             //returns the list of all the vertices (Mboxes) that the maze contains
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		for (int i=0; i<width;i++) {
 			for (int j=0;j<depth;j++) {
-				MBox boxij = new MBox(i,j);
+				MBox boxij = maze[j][i];
 				arrays.add(boxij);
+				/*String label = maze[j][i].getLabel();
+				System.out.println(label);*/
 			}
 		}
 		return arrays;
@@ -39,30 +39,70 @@ public class Maze
 		MBox box = (MBox)vertex ;
 		int x = box.getX();
 		int y = box.getY();
+		int w = width -1 ;
+		int d = depth -1;
 		
 		if (box.getLabel().contentEquals("W")) {    //a wall cannot have any successors
 			return null;
 		}
-		else {                                    // the vertex is not a wall 
-			for (int i = x-1; i <= x+1; i++) {
-				for (int j = y-1 ; j <= y+1; j++) {
-					MBox boxij = new MBox(i,j);
-					while (boxij.getLabel().compareTo("W")!=0) {   //ensuring the neighbors are not walls nor vertex itself
-						while(i != x &&  j != y) {
-							arrays.add(boxij);}                    //adding the successors of vertex (the neighbors that are not walls nor vertex) to the list
-						}
-					}
+		
+		if(x == 0) {
+			if(y>0 && y<d) {
+				arrays.add(maze[x][y+1]);
+				arrays.add(maze[x][y-1]);
+				arrays.add(maze[x+1][y]);
 				}
+			else if(y == 0) {
+				arrays.add(maze[x][y-1]);
+				arrays.add(maze[x+1][y]);
+			}
+			else {
+				arrays.add(maze[x][y+1]);
+				arrays.add(maze[x+1][y]);
+			}
+		}
+		else if (y == 0) {
+			if(x<w) {
+				arrays.add(maze[x][y+1]);
+				arrays.add(maze[x-1][y]);
+				arrays.add(maze[x+1][y]);
+			}
+			else {				
+			arrays.add(maze[x][y+1]);
+			arrays.add(maze[x-1][y]);
+			}
+		}
+		else if(x == w) {
+			if(y<d) {
+				arrays.add(maze[x][y+1]);
+				arrays.add(maze[x][y-1]);
+				arrays.add(maze[x-1][y]);	
+			}
+			else {
+				arrays.add(maze[x][y-1]);
+				arrays.add(maze[x-1][y]);
+			}
+		}
+		else if(y == d) {
+			arrays.add(maze[x][y-1]);
+			arrays.add(maze[x-1][y]);
+			arrays.add(maze[x+1][y]);
+		}
+		else {                                  
+			arrays.add(maze[x][y-1]);
+			arrays.add(maze[x-1][y]);
+			arrays.add(maze[x+1][y]);
+			arrays.add(maze[x][y+1]);
 		}
 		return arrays;
 	}
 
 	@Override
-	public double getWeight(VertexInterface src, VertexInterface dst) {   //Method that will return the weight of an arc between 2 side-to-side Vertices (MBoxes): 1 if they are not walls (WBox), plus infinity if one of them is
+	public int getWeight(VertexInterface src, VertexInterface dst) {   //Method that will return the weight of an arc between 2 side-to-side Vertices (MBoxes): 1 if they are not walls (WBox), plus infinity if one of them is
 		MBox boxsrc = (MBox) src;
 		MBox boxdst = (MBox) dst;
-		if (src.getLabel().contentEquals("W") | dst.getLabel().contentEquals("W")) {
-			return Double.POSITIVE_INFINITY;
+		if (boxsrc.getLabel().contentEquals("W") | boxdst.getLabel().contentEquals("W")) {
+			return Integer.MAX_VALUE;
 		}
 		else {
 			return 1;
@@ -109,8 +149,8 @@ public class Maze
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(fileName);
-			for(int i = 0; i < this.width; i++) {
-			   for(int j =0; j < this.depth; j++) {
+			for(int i = 0; i < Maze.width; i++) {
+			   for(int j =0; j < Maze.depth; j++) {
 	            	pw.print(maze[j][i].getLabel());
 				}
 			   pw.println();
@@ -123,21 +163,73 @@ public class Maze
 				pw.close();
 			} catch (Exception e){}
 		}
-}
-
+   }
+	
+	public final DBox findStart() {
+		DBox start = null;
+		for(int i = 0; i < Maze.width; i++) {
+			   for(int j =0; j < Maze.depth; j++) {
+	            	String label= maze[j][i].getLabel();
+	    			if(label.contentEquals("D")) {
+	    				start = (DBox) maze[j][i];
+	    				}
+				}	
+	}
+		return start;
+	}
+	
+	public final ABox findEnd() {
+		ABox end = null;
+		for(int i = 0; i < Maze.width; i++) {
+			   for(int j =0; j < Maze.depth; j++) {
+	            	String label= maze[j][i].getLabel();
+	    			if(label.contentEquals("A")) {
+	    				end = (ABox) maze[j][i];
+	    				}
+				}	
+	}
+		return end;
+	}
 	@Override
 	public boolean isInG(VertexInterface x) {
-		// TODO Auto-generated method stub
-		return false;
+		ArrayList<VertexInterface> list = 	Maze.getAllVertices();
+		return list.contains(x);
 	}
 
 	@Override
 	public int getNumber() {
+		return width*depth;
+	}
+	
+	public ArrayList<VertexInterface> traceBack(VertexInterface x, VertexInterface y,Previous pr) {
+		
+		ArrayList<VertexInterface> list = new ArrayList<VertexInterface>();
+		
+		while(x != y ) {			
+			list.add(x);
+			System.out.println(x.getLabel());
+			x = pr.get(x);
+			System.out.println(x.getLabel());
+		}
+		return list;				
+	}
+
+
+	@Override
+	public boolean isSuccessor(VertexInterface x, VertexInterface y, GraphInterface m) {  	//returns true if y is a successor of x
 		// TODO Auto-generated method stub
-		return 0;
+		ArrayList<VertexInterface> list = m.getSuccessors(x);
+		return list.contains(y);
 	}
-		
-		
+
+	@Override
+	public ArrayList<VertexInterface> getAllVertices2() {
+		// TODO Auto-generated method stub
+		return Maze.getAllVertices();
 	}
+	
+	
+		
+}
 
 

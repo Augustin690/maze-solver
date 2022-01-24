@@ -1,14 +1,19 @@
 package Dijkstra;
 import java.util.Hashtable;
 
-public class Previous implements PreviousInterface {
+public class Previous extends Hashtable<VertexInterface,VertexInterface> implements PreviousInterface {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
 	public Previous() {
 		
-		new Hashtable<VertexInterface,VertexInterface>();
+		new Hashtable<VertexInterface,VertexInterface>(150);
 	}
     
-	Previous previous = new Previous();
 	
 	@Override
 	public VertexInterface father(VertexInterface x) {

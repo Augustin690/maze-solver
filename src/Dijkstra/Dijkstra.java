@@ -1,61 +1,103 @@
 package Dijkstra;
 
-import Dijkstra.PiInterface;
 import java.util.ArrayList;
-import Dijkstra.ASetInterface;
-import Dijkstra.VertexInterface;
-import Dijkstra.GraphInterface;
-import Dijkstra.PreviousInterface;
+import java.util.HashSet;
+import java.util.Map.Entry;
 
 public class Dijkstra {
 	
 	
-	public static PreviousInterface dijkstra(GraphInterface g, VertexInterface r) {
-		return null;
+	public static Previous dijkstra(GraphInterface g, VertexInterface r) {
+		ASet aset = new ASet();
+		Pi pi = new Pi();
+		Previous previous = new Previous();
+		
+		return dijkstra(g, r, aset, pi, previous);
 		
 	}
 	
-	private static PreviousInterface dijkstra(GraphInterface g, 
+	public static int getMin1(Object[] array){ 
+	    int minValue = (int) array[0]; 
+	    for(int i=1;i<array.length;i++){ 
+	    	int arrayi = (int) array[i];
+	      if(arrayi < minValue){ 
+	        minValue = arrayi; 
+	      } 
+	    } 
+	    return minValue; 
+	  } 
+	
+	private static Previous dijkstra(GraphInterface g, 
 			                           VertexInterface r, 
-			                           ASetInterface A, 
-			                           PiInterface pi, 
-			                           PreviousInterface previous) {
+			                           ASet aset, 
+			                           Pi pi, 
+			                           Previous previous) {
+		
+		
+		HashSet<VertexInterface> A = (HashSet<VertexInterface>) aset;
+		
+	    A.add(r);   
+		VertexInterface pivot = r;  
+		pi.put(r, 0);
 	
 
-		A = A.union(r);   //adding r to A which is supposed to be empty initially
-		
-		VertexInterface pivot = r;  
-	
-		VertexInterface x = null ;
-	
-		while (g.isInG(x)) {
-			int PIx = pi.f(x);
-			PIx = (int) Double.POSITIVE_INFINITY;      //setting pi(x) to positive infinity for x in g 
-			}
-		
-		int PIr = pi.f(r);  //setting the value of pi(r) to 0
-	    PIr = 0;
-		
+		ArrayList<VertexInterface> list = g.getAllVertices2();
+		System.out.println(list.toString());
+	    for(VertexInterface x : list) {
+	    	if(x != r) {
+			pi.put(x,Integer.MAX_VALUE);
+	    	}
+          }
+
 		int n = g.getNumber();
-		
-		for (int j=1 ; j<= n-1 ; j++) {
-			while (g.isInG(x)) {
-				if (A.isInA(x) == false && x.isSuccessor(pivot) == true) {
-					if (pi.f(pivot) + g.getWeight(pivot,x)< pi.f(x)) {
-						int PIx = pi.f(x);
-						PIx = pi.f(pivot) + g.getWeight(pivot,x);
-						VertexInterface fa = previous.father(x);
-						fa = pivot;
+		for (int j=0 ; j<= n-1 ; j++) {
+			System.out.println(j);
+			System.out.println(A.toString());
+			for(VertexInterface y: list) {
+				if(A.contains(y) == false  && g.isSuccessor(pivot,y,g) == true) {
+			          if (pi.get(pivot) + g.getWeight(pivot,y) < pi.get(y)) {
+							pi.put(y, pi.get(pivot) + g.getWeight(pivot,y));
+							previous.put(y, pivot);
+							}
+			}
+
+			}
+			System.out.println(previous.toString());
+			
+			Object[] array = pi.values().toArray();
+			System.out.println(array.toString());
+			for(VertexInterface y: list) {
+				if(A.contains(y) == false) {
+					Integer min = getMin1(array);
+					for(Entry<VertexInterface, Integer> entry: pi.entrySet()) {
+						if (min == entry.getValue()) {
+							VertexInterface ymin = entry.getKey();
+							pivot =  ymin;
+							A.add(pivot);
+						}
 						
 					}
+					
 				}
 			}
-			VertexInterface y  =  A.searchMin();
-			
-			pivot = y ;
-			
-			A = A.union(pivot);
-		 }
+		}
+		System.out.println(previous.toString());
+		return previous;
+
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

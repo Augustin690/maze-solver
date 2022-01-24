@@ -1,6 +1,5 @@
 package Maze;
 
-import Dijkstra.ASetInterface;
 import Dijkstra.VertexInterface;
 
 public class MBox 
@@ -39,23 +38,10 @@ public class MBox
 		
 	}
 
-	@Override
-	public boolean isInA(VertexInterface x, ASetInterface A) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean isSuccessor(VertexInterface x, VertexInterface y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean isSuccessor(VertexInterface x) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
+
 
 
 
