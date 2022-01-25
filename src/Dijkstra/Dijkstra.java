@@ -48,6 +48,11 @@ public class Dijkstra {
 		VertexInterface pivot = r;  
 		pi.put(r, 0);
 		System.out.println(A.toString());
+		for(VertexInterface y: list) {
+			if(y.getLabel().contentEquals("W")){
+				A.add(y);
+			}
+		}
 	
 
 		System.out.println(list.toString());

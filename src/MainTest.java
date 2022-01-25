@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -11,17 +14,27 @@ import Dijkstra.VertexInterface;
 
 public class MainTest {
 	
-	public static void main1(String[] args) throws IOException, MazeReadingException {
+	/*public static void main1(String[] args) throws IOException, MazeReadingException {
 		Maze m = new Maze(10, 10);
 		m.initFromTextFile("data/labyrinthe.txt");
 		m.getAllVertices();
 		m.saveToTextFile("data/labyrinthe3.txt");
 		System.out.println("m successfully constructed from text file");
+	}*/
+	
+	public static void readingFile(String fileName) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
+		
+		String st;
+		
+		while ((st = br.readLine()) != null)
+
+        System.out.println(st);
 	}
 	
 	public static void main(String[] args) throws IOException, MazeReadingException{
 		Maze m = new Maze(10,10);
-		m.initFromTextFile("data/labyrinthefacile");
+		m.initFromTextFile("data/labyrinthesanssoluce");
 		DBox D = m.findStart();
 		System.out.println(D.getLabel());
 		System.out.println(D.getX());
@@ -30,6 +43,9 @@ public class MainTest {
 		System.out.println("Dijkstra is good");
 		ABox A = m.findEnd();
 		ArrayList<VertexInterface> list = m.traceBack(A, D, pr);
-		
+		readingFile("data/labyrinthesanssoluce");
+		m.saveToTextFile("data/labyrinthefacileSolved", list);
+		System.out.println("here is the solution");
+		readingFile("data/labyrinthefacileSolved");
 	}
 }

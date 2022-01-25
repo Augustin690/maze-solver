@@ -101,7 +101,10 @@ public class Maze
 	public int getWeight(VertexInterface src, VertexInterface dst) {   //Method that will return the weight of an arc between 2 side-to-side Vertices (MBoxes): 1 if they are not walls (WBox), plus infinity if one of them is
 		MBox boxsrc = (MBox) src;
 		MBox boxdst = (MBox) dst;
-		if (boxsrc.getLabel().contentEquals("W") | boxdst.getLabel().contentEquals("W")) {
+		if (boxsrc.getLabel().contentEquals("W")) {
+			return Integer.MAX_VALUE;
+		}
+		if(boxdst.getLabel().contentEquals("W")) {
 			return Integer.MAX_VALUE;
 		}
 		else {
@@ -145,13 +148,27 @@ public class Maze
     }
 
 	
-	public final void saveToTextFile(String fileName) throws IOException, MazeReadingException {  //method that will save the Maze into a text file "fileName"
+	public final void saveToTextFile(String fileName, ArrayList<VertexInterface> list) throws IOException, MazeReadingException {  //method that will save the Maze into a text file "fileName"
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(fileName);
 			for(int i = 0; i < Maze.width; i++) {
 			   for(int j =0; j < Maze.depth; j++) {
-	            	pw.print(maze[j][i].getLabel());
+				    String label = maze[j][i].getLabel();
+				    if(list != null) {
+					    if(label.contentEquals("E") && list.contains(maze[j][i])){
+					    	pw.print("+");  	
+					    }
+					    else {
+					    	pw.print(maze[j][i].getLabel());
+					    }
+				    }
+				    else {
+				    	System.out.println("no solution");
+				    	return;
+				    }
+
+
 				}
 			   pw.println();
 			   }
@@ -205,11 +222,18 @@ public class Maze
 		
 		ArrayList<VertexInterface> list = new ArrayList<VertexInterface>();
 		
-		while(x != y ) {			
-			list.add(x);
-			System.out.println(x.getLabel());
-			x = pr.get(x);
-			System.out.println(x.getLabel());
+		while(x != y ) {
+			if(pr.get(x)!= null) {
+				list.add(x);
+				System.out.println(x.getLabel());
+				x = pr.get(x);
+				System.out.println(x.getLabel());
+			}
+			else {
+				System.out.println("there is no solution");
+				return null;
+			}
+
 		}
 		System.out.println(list);
 		System.out.println(list.size());
