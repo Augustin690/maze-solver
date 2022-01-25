@@ -53,11 +53,11 @@ public class Maze
 				arrays.add(maze[x+1][y]);
 				}
 			else if(y == 0) {
-				arrays.add(maze[x][y-1]);
+				arrays.add(maze[x][y+1]);
 				arrays.add(maze[x+1][y]);
 			}
 			else {
-				arrays.add(maze[x][y+1]);
+				arrays.add(maze[x][y-1]);
 				arrays.add(maze[x+1][y]);
 			}
 		}
@@ -211,6 +211,8 @@ public class Maze
 			x = pr.get(x);
 			System.out.println(x.getLabel());
 		}
+		System.out.println(list);
+		System.out.println(list.size());
 		return list;				
 	}
 
