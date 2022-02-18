@@ -139,7 +139,7 @@ public class Maze
         			maze[i][j] = new ABox(i,j) ;
         			}
         		else {
-        			throw new MazeReadingException(fileName,89,"invalid letter");
+        			throw new MazeReadingException(fileName ,89,"invalid letter");
         		}
         	}
                                                    

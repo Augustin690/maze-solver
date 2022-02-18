@@ -34,7 +34,7 @@ public class MainTest {
 	
 	public static void main(String[] args) throws IOException, MazeReadingException{
 		Maze m = new Maze(10,10);
-		m.initFromTextFile("data/labyrinthesanssoluce");
+		m.initFromTextFile("data/labyrintheplusdur");
 		DBox D = m.findStart();
 		System.out.println(D.getLabel());
 		System.out.println(D.getX());
@@ -43,9 +43,14 @@ public class MainTest {
 		System.out.println("Dijkstra is good");
 		ABox A = m.findEnd();
 		ArrayList<VertexInterface> list = m.traceBack(A, D, pr);
-		readingFile("data/labyrinthesanssoluce");
+		readingFile("data/labyrintheplusdur");
 		m.saveToTextFile("data/labyrinthefacileSolved", list);
-		System.out.println("here is the solution");
+		if(list!= null) {
+			System.out.println("here is the solution");
+		}
+		else {
+			System.out.println("no solution");
+		}
 		readingFile("data/labyrinthefacileSolved");
 	}
 }
