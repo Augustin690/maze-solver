@@ -7,7 +7,7 @@ import javax.swing.*;
 
 import model.WindowModel;
 
-public class Window extends JFrame implements Observer {
+public class MazeApp extends JFrame implements Observer {
 	
 	/**
 	 * 
@@ -18,8 +18,8 @@ public class Window extends JFrame implements Observer {
 	private final WindowsPanel windowPanel;
 	/*private final JPanel panel;*/
 
-	public Window() {
-		super("Drawing space");
+	public MazeApp() {
+		super("Maze solving program");
 		
 		//menu bar
 		menuBar = new MenuBar(this);
@@ -47,6 +47,7 @@ public class Window extends JFrame implements Observer {
 		this.windowModel = windowModel;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void update(Observable observable, Object parameter) {
 		// TODO Auto-generated method stub
@@ -56,6 +57,11 @@ public class Window extends JFrame implements Observer {
 	public void notifyForUpdate() {
 		
 		windowPanel.notifyForUpdate();
+	}
+	
+	public WindowsPanel getPanel() {
+		
+		return windowPanel;
 	}
 
 }

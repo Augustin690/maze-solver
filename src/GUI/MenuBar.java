@@ -4,15 +4,16 @@ import javax.swing.*;
 
 public class MenuBar extends JMenuBar {
 	
-	private Menu menu;
+	private FileMenu file;
+	private SolveItem solve;
 	
-	
-	public MenuBar(Window window) {
+	public MenuBar(MazeApp mazeApp) {
 		
 		super();
-		
-		
-		add(menu = new Menu(window));
+				
+		add(file = new FileMenu(mazeApp));
+		add(solve = new SolveItem(mazeApp));
+			
 	}
 
 }

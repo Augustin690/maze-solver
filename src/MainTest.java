@@ -32,10 +32,10 @@ public class MainTest {
         System.out.println(st);
 	}
 	
-	public static void main(String[] args) throws IOException, MazeReadingException{
+	public static void main(String[] args) throws IOException, MazeReadingException {
 		Maze m = new Maze(10,10);
 		m.initFromTextFile("data/labyrintheplusdur");
-		DBox D = m.findStart();
+		DBox D = m.Start();
 		System.out.println(D.getLabel());
 		System.out.println(D.getX());
 		System.out.println(D.getY());

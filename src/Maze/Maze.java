@@ -1,6 +1,11 @@
 package Maze;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Reader;
 import java.util.ArrayList;
-import java.io.*;
+
 import Dijkstra.GraphInterface;
 import Dijkstra.Previous;
 import Dijkstra.VertexInterface;
@@ -112,8 +117,8 @@ public class Maze
 		}
 	}
 	
-	public final void initFromTextFile(String fileName) throws IOException, MazeReadingException {  //trying to turn a method that reads the file into one that constructs a maze from it
-	      
+	public final void initFromTextFile(String fileName) throws IOException, MazeReadingException {  
+		
         Reader reader = new FileReader(fileName);
         BufferedReader br = new BufferedReader(reader);  
         maze = new MBox[depth][width];
@@ -182,7 +187,7 @@ public class Maze
 		}
    }
 	
-	public final DBox findStart() {
+	public final DBox Start() {
 		DBox start = null;
 		for(int i = 0; i < Maze.width; i++) {
 			   for(int j =0; j < Maze.depth; j++) {
@@ -254,8 +259,20 @@ public class Maze
 		return Maze.getAllVertices();
 	}
 	
-	
+	public int getWidth() {
 		
+		return width;
+	}
+	
+	public int getDepth() {
+		
+		return depth;
+	}
+	
+	public MBox[][] getMaze() {
+		
+		return maze;
+	}
 }
 
 

@@ -6,23 +6,28 @@ import java.awt.*;
 public final class WindowsPanel extends JPanel {
 	
 	private final DrawingPanel drawingPanel;
-	private final ButtonsPanel buttonsPanel;
+	/*private final ButtonsPanel buttonsPanel;*/
 	
-	public WindowsPanel(Window window) {
+	public WindowsPanel(MazeApp mazeApp) {
 		
 		super();
 		
 		setLayout(new BorderLayout());
 		
-		add(drawingPanel = new DrawingPanel(window), BorderLayout.CENTER);
+		add(drawingPanel = new DrawingPanel(mazeApp));
 		
-		add(buttonsPanel = new ButtonsPanel(window), BorderLayout.SOUTH);
+		/*add(buttonsPanel = new ButtonsPanel(window), BorderLayout.SOUTH);*/
 	}
 	
 	public void notifyForUpdate() {
 		
 		drawingPanel.notifyForUpdate();
-		buttonsPanel.notifyForUpdate();
+		/*buttonsPanel.notifyForUpdate();*/
+	}
+	
+	public DrawingPanel getDrawingPanel() {
+		
+		return drawingPanel;
 	}
 
 }
