@@ -15,12 +15,13 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 
-public class MBoxPanel extends JPanel implements MouseListener {
+public class MBoxPanel extends JPanel  {
 	
 	private final MazeApp mazeApp;
-	private String labelMPanel;
+	private String labelMPanel = "E";
 	private MBox mbox;
-	private static boolean imported;
+	private static boolean imported = false;
+	private static boolean solved = false;
 	
 	/*private JLabel image = new JLabel(new ImageIcon("data/BrickWall.jpg"));
 	ImageIcon imageIcon = new ImageIcon("data/BrickWall.jpg");
@@ -45,65 +46,53 @@ public class MBoxPanel extends JPanel implements MouseListener {
 		setBackground(Color.RED);
 		
 		this.mazeApp = mazeApp;
-		addMouseListener(this);
-		/*add(newLabel);	*/
+		
 		
 	}
 	
 	@SuppressWarnings("deprecation")
-	/*public void paint(Graphics g) {
-		
-		super.paint(g);
-		
-		int w = getWidth();
-		int h = getHeight();
-		System.out.println("yes1");
-		boolean v = true;
-		
-		while(mazeApp.getModel().isModified()) {
-			System.out.println("yes");
-			g.setColor(mazeApp.getModel().getCurrentColor());
-			g.fillRect(4,4,w-8,h-8);
+	public void paint(Graphics g) {
 			
-			g.setColor(Color.BLACK);
-			g.drawRect(4,4,w-8,h-8);
-			/*v = false;*/
-			/*if(!v) {
-				break;
-			}*/
-		//}
+			super.paint(g);
+			
+			int w = getWidth();
+			int h = getHeight();
+			System.out.println("yes1");
+			boolean v = true;
+			
+			
+				System.out.println("yes");
+				g.setColor(mazeApp.getModel().getCurrentColor());
+				g.fillRect(8,8,w-15,h-15);
+				
+				g.setColor(Color.BLACK);
+				g.drawRect(8,8,w-15,h-15);
+				/*v = false;*/
+				/*if(!v) {
+					break;
+				}*/
 		
-	//}
+	}
 	
 	public void MouseEntered(MouseEvent e) {
 		
 		setBackground(Color.GREEN);
 	}
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		/*MBoxPanel mPanel = (MBoxPanel) e.getSource();
-		WindowModel model = mazeApp.getModel();
-		Color newColor = JColorChooser.showDialog(mazeApp, "change MBox color", model.getCurrentColor());
-		
-		if(newColor != null) {
-			/*setBackground(newColor);
-			model.update();*/
-			/*model.setCurrentColor(newColor,mPanel);
-			System.out.println("hi lets goooooooooooooooooooo");
-		}*/
-	}
 	
 	public void refresh() {
 		WindowModel model = mazeApp.getModel();
 		
+		if(solved) {
+			
+			setBackground(Color.cyan);
+			
+		}
 		
 		if(imported) {
 			
                  if(labelMPanel == "A") {
 				
-		         setBackground(Color.BLACK);
+		         setBackground(Color.YELLOW);
 		         }
                  
                  if(labelMPanel == "D") {
@@ -118,7 +107,7 @@ public class MBoxPanel extends JPanel implements MouseListener {
                  
                  if(labelMPanel == "E") {
 				
-				setBackground(Color.WHITE);
+				setBackground(Color.darkGray);
 				}
            }
 		}
@@ -146,30 +135,13 @@ public class MBoxPanel extends JPanel implements MouseListener {
 		
 		MBoxPanel.imported = imported;
 	}
+
+	public static boolean isSolved() {
+		return solved;
+	}
+
+	public static void setSolved(boolean solved) {
+		MBoxPanel.solved = solved;
+	}
 	
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }

@@ -21,9 +21,10 @@ import Maze.MazeReadingException;
 public final class WindowModel extends Observable {
 	
 	private Maze m;
-	private Color currentColor = Color.WHITE;
+	private Color currentColor = Color.PINK;
 	private boolean modified;
 	private MazeApp mazeApp;
+	private ArrayList<VertexInterface> solutionPath;
 	
 	@SuppressWarnings("deprecation")
 	public WindowModel(){
@@ -34,27 +35,30 @@ public final class WindowModel extends Observable {
 	}
 	
 	public void solveMaze() {
-		System.out.println("OK");
-		ArrayList<VertexInterface> mboxList = m.getAllVertices2();
-		DBox D = m.Start();
-		System.out.println(D.getLabel());
-		System.out.println(D.getX());
-		System.out.println(D.getY());
-		Previous pr = Dijkstra.dijkstra(m, D);
-		System.out.println("Dijkstra is good");
-		ABox A = m.findEnd();
-		ArrayList<VertexInterface> list = m.traceBack(A, D, pr);
-		for(VertexInterface x :list) {
-			String label = x.getLabel();
-			if(list != null) {
-			    if(label.contentEquals("E") && list.contains(x)){
-			    	mazeApp.getPanel().getDrawingPanel().getComponent(mboxList.indexOf(x)).setBackground(Color.RED);  	
-			    }
-		    }
 		
+		if(MBoxPanel.isImported()) {
+			
+			MBoxPanel.setImported(false);
+			System.out.println("solving" + MBoxPanel.isImported());
+			ArrayList<VertexInterface> mboxList = m.getAllVertices2();
+			DBox D = m.Start();
+			/*System.out.println(D.getLabel());
+			System.out.println(D.getX());
+			System.out.println(D.getY());*/
+			Previous pr = Dijkstra.dijkstra(m, D);
+			System.out.println("Dijkstra is good");
+			ABox A = m.findEnd();
+			solutionPath = m.traceBack(A, D, pr);
+			update();
+		
+			
+		}
 	}
-}
 	
+	public ArrayList<VertexInterface> getSolutionPath()	{
+		
+		return solutionPath;
+	}
 	
 	public void importMaze(File file, MazeApp mazeApp) {
 		
@@ -70,8 +74,6 @@ public final class WindowModel extends Observable {
 			e1.printStackTrace();
 			}
 			setMazeModel(m);
-			
-			ArrayList<VertexInterface> mboxList = m.getAllVertices2();
 			
 			/*((MBoxPanel) mazeApp.getPanel().getDrawingPanel().getComponent(mboxList.indexOf(x))).setLabelMPanel(label);*/
 			

@@ -5,12 +5,17 @@ import javax.swing.*;
 import Maze.MBox;
 
 import java.awt.*;
-import java.lang.reflect.Parameter;
 
 public final class WindowsPanel extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private final DrawingPanel drawingPanel;
-	/*private final ButtonsPanel buttonsPanel;*/
+	private final ButtonPanel buttonsPanel;
 	
 	public WindowsPanel(MazeApp mazeApp) {
 		
@@ -20,7 +25,7 @@ public final class WindowsPanel extends JPanel {
 		
 		add(drawingPanel = new DrawingPanel(mazeApp));
 		
-		/*add(buttonsPanel = new ButtonsPanel(window), BorderLayout.SOUTH);*/
+		add(buttonsPanel = new ButtonPanel(mazeApp), BorderLayout.SOUTH);
 	}
 	
 	public void notifyForUpdate() {
@@ -38,6 +43,10 @@ public final class WindowsPanel extends JPanel {
 	public DrawingPanel getDrawingPanel() {
 		
 		return drawingPanel;
+	}
+
+	public ButtonPanel getButtonsPanel() {
+		return buttonsPanel;
 	}
 
 }
