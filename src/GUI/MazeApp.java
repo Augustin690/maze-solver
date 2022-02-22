@@ -1,10 +1,12 @@
 package GUI;
 
+import java.lang.reflect.Parameter;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.*;
 
+import Maze.MBox;
 import model.WindowModel;
 
 public class MazeApp extends JFrame implements Observer {
@@ -16,11 +18,14 @@ public class MazeApp extends JFrame implements Observer {
 	
 	private final MenuBar menuBar;
 	private final WindowsPanel windowPanel;
+	private WindowModel windowModel = new WindowModel();
 	/*private final JPanel panel;*/
 
+	@SuppressWarnings("deprecation")
 	public MazeApp() {
 		super("Maze solving program");
 		
+		windowModel.addObserver(this);
 		//menu bar
 		menuBar = new MenuBar(this);
 		setJMenuBar(menuBar);
@@ -29,13 +34,13 @@ public class MazeApp extends JFrame implements Observer {
 		windowPanel = new WindowsPanel(this);
 		setContentPane(windowPanel);
 		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		pack();
 		setVisible(true);
 	}
 	
-	private WindowModel windowModel = new WindowModel();
 	
 	public final WindowModel getModel() {
 		
@@ -57,6 +62,11 @@ public class MazeApp extends JFrame implements Observer {
 	public void notifyForUpdate() {
 		
 		windowPanel.notifyForUpdate();
+	}
+	
+     public void notifyForUpdate(MBox mbox) {
+		
+		windowPanel.notifyForUpdate(mbox);
 	}
 	
 	public WindowsPanel getPanel() {

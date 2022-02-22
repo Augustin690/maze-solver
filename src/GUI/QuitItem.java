@@ -23,7 +23,7 @@ public class QuitItem extends JMenuItem implements ActionListener {
 	   {
 	      WindowModel model = mazeApp.getModel() ;
 		   
-	      if (model.hasChanged()) {
+	      if (model.isModified()) {
 	         int response = JOptionPane.showInternalOptionDialog(this,
 	                                                             "Drawing not saved. Save it ?",
 	                                                             "Quit application",

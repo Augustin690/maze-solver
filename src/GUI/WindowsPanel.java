@@ -1,7 +1,11 @@
 package GUI;
 
 import javax.swing.*;
+
+import Maze.MBox;
+
 import java.awt.*;
+import java.lang.reflect.Parameter;
 
 public final class WindowsPanel extends JPanel {
 	
@@ -22,6 +26,12 @@ public final class WindowsPanel extends JPanel {
 	public void notifyForUpdate() {
 		
 		drawingPanel.notifyForUpdate();
+		/*buttonsPanel.notifyForUpdate();*/
+	}
+	
+	public void notifyForUpdate(MBox mbox) {
+		
+		drawingPanel.notifyForUpdate(mbox);
 		/*buttonsPanel.notifyForUpdate();*/
 	}
 	
