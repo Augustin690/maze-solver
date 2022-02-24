@@ -259,19 +259,22 @@ public class Maze
 		return Maze.getAllVertices();
 	}
 	
-	public int getWidth() {
+	public static MBox[][] getMaze() {
 		
+		return maze;
+	}
+	
+	public void setMaze(MBox[][] maze) {
+		
+		Maze.maze = maze;
+	}
+	
+	public static int getWidth() {
 		return width;
 	}
 	
-	public int getDepth() {
-		
+	public static int getDepth() {
 		return depth;
-	}
-	
-	public MBox[][] getMaze() {
-		
-		return maze;
 	}
 }
 

@@ -56,7 +56,14 @@ public class MazeApp extends JFrame implements Observer {
 	@Override
 	public void update(Observable observable, Object parameter) {
 		// TODO Auto-generated method stub
-		notifyForUpdate();
+		if(MBoxPanel.isImported() || MBoxPanel.isSolved()) {
+			notifyForUpdate();
+		}
+		
+		else {
+			
+			notifyForUpdate((MBoxPanel) parameter);
+		}
 	}
 	
 	public void notifyForUpdate() {
@@ -64,9 +71,9 @@ public class MazeApp extends JFrame implements Observer {
 		windowPanel.notifyForUpdate();
 	}
 	
-     public void notifyForUpdate(MBox mbox) {
+     public void notifyForUpdate(MBoxPanel mboxPanel) {
 		
-		windowPanel.notifyForUpdate(mbox);
+		windowPanel.notifyForUpdate(mboxPanel);
 	}
 	
 	public WindowsPanel getPanel() {

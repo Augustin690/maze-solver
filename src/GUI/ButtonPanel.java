@@ -1,6 +1,10 @@
 package GUI;
 
+import java.awt.Component;
+
 import javax.swing.JPanel;
+
+import Maze.MBox;
 
 public class ButtonPanel extends JPanel {
 
@@ -11,14 +15,58 @@ public class ButtonPanel extends JPanel {
 	
 	
 	private WallButton wallButton;
+	private StartButton startButton;
+	private EndButton endButton;
 	
 	public ButtonPanel(MazeApp mazeApp) {
 		
 		super();
 		
-		add(wallButton = new WallButton(mazeApp));
+		add(setWallButton(new WallButton(mazeApp)));
+		add(setStartButton(new StartButton(mazeApp)));
+		add(setEndButton(new EndButton(mazeApp)));
 		
 		
 	}
+
+	public WallButton getWallButton() {
+		return wallButton;
+	}
+
+	public WallButton setWallButton(WallButton wallButton) {
+		this.wallButton = wallButton;
+		return wallButton;
+	}
+
+	public StartButton getStartButton() {
+		return startButton;
+	}
+
+	public StartButton setStartButton(StartButton startButton) {
+		this.startButton = startButton;
+		return startButton;
+	}
+
+	public EndButton getEndButton() {
+		return endButton;
+	}
+
+	public EndButton setEndButton(EndButton endButton) {
+		this.endButton = endButton;
+		return endButton;
+	}
+
+	public void notifyForUpdate(MBoxPanel mboxPanel) {
+		// TODO Auto-generated method stub
+		wallButton.notifyForUpdate(mboxPanel);
+		startButton.notifyForUpdate(mboxPanel);
+		endButton.notifyForUpdate(mboxPanel);
+		
+		
+	}
+	
+	
+	
+	
 	
 }

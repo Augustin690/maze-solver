@@ -28,6 +28,7 @@ public class ImportItem extends JMenuItem implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		WallButton.setWallsSelection(false);
 		System.out.println("OKi");
 		JFileChooser fc = new JFileChooser("/JavaMazeProject/data");
 		fc.showDialog(mazeApp, "IMPORT");

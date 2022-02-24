@@ -34,10 +34,10 @@ public final class WindowsPanel extends JPanel {
 		/*buttonsPanel.notifyForUpdate();*/
 	}
 	
-	public void notifyForUpdate(MBox mbox) {
+	public void notifyForUpdate(MBoxPanel mboxPanel) {
 		
-		drawingPanel.notifyForUpdate(mbox);
-		/*buttonsPanel.notifyForUpdate();*/
+		drawingPanel.notifyForUpdate(mboxPanel);
+		/*buttonsPanel.notifyForUpdate(mboxPanel);*/
 	}
 	
 	public DrawingPanel getDrawingPanel() {

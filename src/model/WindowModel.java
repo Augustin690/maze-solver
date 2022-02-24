@@ -10,17 +10,23 @@ import javax.swing.JFileChooser;
 import Dijkstra.Dijkstra;
 import Dijkstra.Previous;
 import Dijkstra.VertexInterface;
+import GUI.DrawingPanel;
+import GUI.EndButton;
 import GUI.MBoxPanel;
 import GUI.MazeApp;
+import GUI.StartButton;
+import GUI.WallButton;
 import Maze.ABox;
 import Maze.DBox;
+import Maze.EBox;
 import Maze.MBox;
 import Maze.Maze;
 import Maze.MazeReadingException;
+import Maze.WBox;
 
 public final class WindowModel extends Observable {
 	
-	private Maze m;
+	private static Maze m;
 	private Color currentColor = Color.PINK;
 	private boolean modified;
 	private MazeApp mazeApp;
@@ -40,21 +46,51 @@ public final class WindowModel extends Observable {
 			
 			MBoxPanel.setImported(false);
 			System.out.println("solving" + MBoxPanel.isImported());
-			ArrayList<VertexInterface> mboxList = m.getAllVertices2();
 			DBox D = m.Start();
-			/*System.out.println(D.getLabel());
-			System.out.println(D.getX());
-			System.out.println(D.getY());*/
 			Previous pr = Dijkstra.dijkstra(m, D);
 			System.out.println("Dijkstra is good");
 			ABox A = m.findEnd();
 			solutionPath = m.traceBack(A, D, pr);
 			update();
+		}
 		
+		else if(WallButton.isWallsSelection() || StartButton.isStartSelection() || EndButton.isEndSelection()) {
+			
+			System.out.println("boucle");
+			m = new Maze(10,10);
+			update();
+			System.out.println("solving" + MBoxPanel.isImported());
+			
+			 for(int i =0; i< Maze.getWidth();i++) {
+			    	for(int j = 0; j<Maze.getDepth();j++) {
+			    		
+			    		System.out.print(Maze.getMaze()[j][i].getLabel());
+			    		
+			    	}
+			    }
+			 for(int i =0; i< Maze.getWidth();i++) {
+			    	for(int j = 0; j<Maze.getDepth();j++) {
+			    		
+			    		System.out.print(Maze.getMaze()[i][j]);
+			    		
+			    	}
+			    }
+			DBox D = DrawingPanel.getD();
+			
+			System.out.println("depart"+ D.getLabel() + D.getX() + D.getY());
+			ABox A = m.findEnd();
+			System.out.println("arrivee"+ A.getLabel() + A.getX() + A.getY());
+			/*System.exit(0);*/
+			Previous pr = Dijkstra.dijkstra(m, D);
+			System.out.println("Dijkstra is good");
+			solutionPath = m.traceBack(A, D, pr);
+			WallButton.setWallsSelection(false);
+			update();
 			
 		}
 	}
 	
+
 	public ArrayList<VertexInterface> getSolutionPath()	{
 		
 		return solutionPath;
@@ -75,32 +111,25 @@ public final class WindowModel extends Observable {
 			}
 			setMazeModel(m);
 			
-			/*((MBoxPanel) mazeApp.getPanel().getDrawingPanel().getComponent(mboxList.indexOf(x))).setLabelMPanel(label);*/
-			
 			update();
-				
-			
-				
-				/*if(label == "A") {
-				
-				mazeApp.getPanel().getDrawingPanel().getComponent(mboxList.indexOf(x)).setBackground(Color.BLACK);
-
-			}
-			if(label == "D") {
-				
-				mazeApp.getPanel().getDrawingPanel().getComponent(mboxList.indexOf(x)).setBackground(Color.BLUE);
-			}
-			if(label == "W") {
-				
-				mazeApp.getPanel().getDrawingPanel().getComponent(mboxList.indexOf(x)).setBackground(Color.GREEN);
-			}
-			if(label == "E") {
-				
-				mazeApp.getPanel().getDrawingPanel().getComponent(mboxList.indexOf(x)).setBackground(Color.WHITE);
-			}*/
-			
 		}
 	  }
+	
+	public void selectWall(MBoxPanel mboxPanel) {
+		// TODO Auto-generated method stub
+		update(mboxPanel);
+		
+	}
+	
+	public void selectStart(MBoxPanel mboxPanel) {
+		
+		update(mboxPanel);
+	}
+	
+	public void selectEnd(MBoxPanel mboxPanel) {
+		
+		update(mboxPanel);
+	}
 	
 	
 	@SuppressWarnings("deprecation")
@@ -116,17 +145,22 @@ public final class WindowModel extends Observable {
 		System.out.println(hasChanged());
 		notifyObservers();
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void update(MBoxPanel mboxPanel) {
+		
+		setChanged();
+		notifyObservers(mboxPanel);
+	}
 
-	public Maze getMazeModel() {
+	public static Maze getMazeModel() {
 		return m;
 	}
 	
-	public void setMazeModel(Maze m) {
+	public static void setMazeModel(Maze m) {
 		
-		this.m = m;
+		WindowModel.m = m;
 	}
-
-
 
 
 
@@ -139,29 +173,6 @@ public final class WindowModel extends Observable {
 		// TODO Auto-generated method stub
 		return currentColor;
 	}
-	
-	@SuppressWarnings("deprecation")
-	public void setCurrentColor(Color currentColor, MBoxPanel mPanel) {
-		
-	    System.out.println("OKK");
-		this.currentColor = currentColor;
-		this.setChanged();
-		this.modified = true;
-		System.out.println("OKK2");
-		this.notifyObservers(mPanel);
-		System.out.println("OKK3");
-	}
-	
-     @SuppressWarnings("deprecation")
-	public void setCurrentColor(Color currentColor) {
-		
-	    System.out.println("OKK");
-		this.currentColor = currentColor;
-		this.setChanged();
-		this.modified = true;
-		this.notifyObservers();
-
-	}
 
 	public boolean isModified() {
 		return modified;
@@ -170,7 +181,6 @@ public final class WindowModel extends Observable {
 	public void setModified(boolean modified) {
 		this.modified = modified;
 	}
-	
 
 
 }

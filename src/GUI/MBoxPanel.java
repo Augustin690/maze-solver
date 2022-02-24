@@ -1,21 +1,20 @@
 package GUI;
 
-import javax.swing.JLabel ;
-import javax.swing.ImageIcon;
-import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 
-import Dijkstra.VertexInterface;
 import Maze.MBox;
-import Maze.Maze;
 import model.WindowModel;
 
 import java.awt.* ;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 
-public class MBoxPanel extends JPanel  {
+public class MBoxPanel extends JPanel implements MouseListener {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	private final MazeApp mazeApp;
 	private String labelMPanel = "E";
@@ -23,34 +22,16 @@ public class MBoxPanel extends JPanel  {
 	private static boolean imported = false;
 	private static boolean solved = false;
 	
-	/*private JLabel image = new JLabel(new ImageIcon("data/BrickWall.jpg"));
-	ImageIcon imageIcon = new ImageIcon("data/BrickWall.jpg");
-	int width = imageIcon.getIconWidth() / 2;
-	int height = imageIcon.getIconHeight() / 2;
-	Image scaled = scaleImage(imageIcon.getImage(), width, height);
-	
-	private Image scaleImage(Image image, int w, int h) {
-
-	    Image scaled = image.getScaledInstance(w+4, h+12, Image.SCALE_REPLICATE);
-
-	    return scaled;
-	}
-	
-	ImageIcon scaledIcon = new ImageIcon(scaled);
-
-	JLabel newLabel = new JLabel(scaledIcon);*/
-	
 	public MBoxPanel(MazeApp mazeApp) {
 		
 		super();
 		setBackground(Color.RED);
 		
 		this.mazeApp = mazeApp;
-		
-		
+		addMouseListener(this);
 	}
 	
-	@SuppressWarnings("deprecation")
+	
 	public void paint(Graphics g) {
 			
 			super.paint(g);
@@ -58,19 +39,13 @@ public class MBoxPanel extends JPanel  {
 			int w = getWidth();
 			int h = getHeight();
 			System.out.println("yes1");
-			boolean v = true;
 			
 			
-				System.out.println("yes");
-				g.setColor(mazeApp.getModel().getCurrentColor());
-				g.fillRect(8,8,w-15,h-15);
+			g.setColor(mazeApp.getModel().getCurrentColor());
+			g.fillRect(8,8,w-15,h-15);
 				
-				g.setColor(Color.BLACK);
-				g.drawRect(8,8,w-15,h-15);
-				/*v = false;*/
-				/*if(!v) {
-					break;
-				}*/
+			g.setColor(Color.BLACK);
+			g.drawRect(8,8,w-15,h-15);
 		
 	}
 	
@@ -88,7 +63,28 @@ public class MBoxPanel extends JPanel  {
 			
 		}
 		
-		if(imported) {
+		if(WallButton.isWallsSelection()) {
+			
+			setLabelMPanel("W");
+			/*mbox.setLabel("W");*/
+			System.out.println("helloooooo");
+		}
+		
+		if(StartButton.isStartSelection()) {
+			
+			setLabelMPanel("D");
+			System.out.println("hellooooooDD");
+		}
+		
+		if(EndButton.isEndSelection()) {
+			
+			setLabelMPanel("A");
+			System.out.println("hellooooooAAA");
+		}
+		
+		if(imported || WallButton.isWallsSelection() || StartButton.isStartSelection() || EndButton.isEndSelection() ) {
+			
+			if(!solved) {
 			
                  if(labelMPanel == "A") {
 				
@@ -104,13 +100,16 @@ public class MBoxPanel extends JPanel  {
 				
 				setBackground(Color.GREEN);
 				}
+                 System.out.println("hello");
                  
                  if(labelMPanel == "E") {
 				
 				setBackground(Color.darkGray);
 				}
+			}
            }
-		}
+		
+	}
 	
 	
 	public void notifyForUpdate() {
@@ -142,6 +141,58 @@ public class MBoxPanel extends JPanel  {
 
 	public static void setSolved(boolean solved) {
 		MBoxPanel.solved = solved;
+	}
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		MBoxPanel mboxPanel = (MBoxPanel) e.getSource();
+		if(WallButton.isWallsSelection()) {
+			
+			mazeApp.getModel().selectWall(mboxPanel);
+			System.out.println("selecting wall");
+			
+		}
+		if(StartButton.isStartSelection()) {
+			
+			mazeApp.getModel().selectStart(mboxPanel);
+			StartButton.setStartSelection(false);
+		}
+		
+		if(EndButton.isEndSelection()) {
+			
+			mazeApp.getModel().selectEnd(mboxPanel);
+			EndButton.setEndSelection(false);
+		}
+	}
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
