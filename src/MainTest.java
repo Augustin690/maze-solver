@@ -22,19 +22,14 @@ public class MainTest {
 		System.out.println("m successfully constructed from text file");
 	}*/
 	
-	public static void readingFile(String fileName) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		
-		String st;
-		
-		while ((st = br.readLine()) != null)
 
-        System.out.println(st);
-	}
 	
 	public static void main(String[] args) throws IOException, MazeReadingException {
-		Maze m = new Maze(10,10);
-		m.initFromTextFile("data/labyrintheplusdur");
+		ArrayList<Integer> dimensions = Maze.readingFile("data/Untitled 1");
+		int d = dimensions.get(0);
+		int w = dimensions.get(1);
+		Maze m = new Maze(d,w);
+		m.initFromTextFile("data/Untitled 1");
 		DBox D = m.Start();
 		System.out.println(D.getLabel());
 		System.out.println(D.getX());
@@ -43,14 +38,14 @@ public class MainTest {
 		System.out.println("Dijkstra is good");
 		ABox A = m.findEnd();
 		ArrayList<VertexInterface> list = m.traceBack(A, D, pr);
-		readingFile("data/labyrintheplusdur");
-		m.saveToTextFile("data/labyrinthefacileSolved", list);
+		Maze.readingFile("data/Untitled 1");
+		m.saveToTextFile("data/untitled1Solved", list);
 		if(list!= null) {
 			System.out.println("here is the solution");
 		}
 		else {
 			System.out.println("no solution");
 		}
-		readingFile("data/labyrinthefacileSolved");
+		Maze.readingFile("data/untitled1Solved");
 	}
 }

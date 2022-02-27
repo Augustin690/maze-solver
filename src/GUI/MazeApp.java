@@ -7,8 +7,10 @@ import java.util.Observer;
 import javax.swing.*;
 
 import Maze.MBox;
+import model.Ctrl;
 import model.WindowModel;
 
+@SuppressWarnings("deprecation")
 public class MazeApp extends JFrame implements Observer {
 	
 	/**
@@ -19,11 +21,13 @@ public class MazeApp extends JFrame implements Observer {
 	private final MenuBar menuBar;
 	private final WindowsPanel windowPanel;
 	private WindowModel windowModel = new WindowModel();
-	/*private final JPanel panel;*/
 
-	@SuppressWarnings("deprecation")
 	public MazeApp() {
 		super("Maze solving program");
+		
+		
+		ImageIcon img = new ImageIcon("data/BrickWall.jpg");
+		setIconImage(img.getImage());
 		
 		windowModel.addObserver(this);
 		//menu bar
@@ -33,7 +37,8 @@ public class MazeApp extends JFrame implements Observer {
 		//content creation
 		windowPanel = new WindowsPanel(this);
 		setContentPane(windowPanel);
-		
+		JOptionPane.showMessageDialog(this, "if you are using that program for the first time do not hesitate \n "
+				+ "to go to the info Menu to learn on how to use this program");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -52,18 +57,25 @@ public class MazeApp extends JFrame implements Observer {
 		this.windowModel = windowModel;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void update(Observable observable, Object parameter) {
 		// TODO Auto-generated method stub
-		if(MBoxPanel.isImported() || MBoxPanel.isSolved()) {
-			notifyForUpdate();
+		if(Ctrl.isImported() || Ctrl.isSolved()) {
+			if(/*WallButton.isWallsSelection() !Ctrl.isModified()*/ parameter == null) {
+				System.out.println("MazeApp.notifyForUpdate()")	;
+				notifyForUpdate();
+			}
+
+			else {
+				System.out.println("MazeApp.notifyForUpdate(param)");
+				notifyForUpdate((MBoxPanel) parameter);
+			}			
 		}
 		
 		else {
-			
+			System.out.println("MazeApp.notifyForUpdate(param)");
 			notifyForUpdate((MBoxPanel) parameter);
-		}
+		}	
 	}
 	
 	public void notifyForUpdate() {

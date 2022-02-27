@@ -24,6 +24,7 @@ import Maze.Maze;
 import Maze.MazeReadingException;
 import Maze.WBox;
 
+@SuppressWarnings("deprecation")
 public final class WindowModel extends Observable {
 	
 	private static Maze m;
@@ -32,7 +33,6 @@ public final class WindowModel extends Observable {
 	private MazeApp mazeApp;
 	private ArrayList<VertexInterface> solutionPath;
 	
-	@SuppressWarnings("deprecation")
 	public WindowModel(){
 		
 		super();
@@ -42,10 +42,11 @@ public final class WindowModel extends Observable {
 	
 	public void solveMaze() {
 		
-		if(MBoxPanel.isImported()) {
-			
-			MBoxPanel.setImported(false);
-			System.out.println("solving" + MBoxPanel.isImported());
+		if(Ctrl.isImported() && !Ctrl.isModified()) {
+		
+			/*Ctrl.setImported(false);*/
+			System.out.println("solving" + Ctrl.isImported());
+			/*System.exit(0);*/
 			DBox D = m.Start();
 			Previous pr = Dijkstra.dijkstra(m, D);
 			System.out.println("Dijkstra is good");
@@ -54,39 +55,45 @@ public final class WindowModel extends Observable {
 			update();
 		}
 		
-		else if(WallButton.isWallsSelection() || StartButton.isStartSelection() || EndButton.isEndSelection()) {
+		else if(Ctrl.isModified() /*|| Ctrl.isStartSelection() || Ctrl.isEndSelection()*/) {
 			
-			System.out.println("boucle");
-			m = new Maze(10,10);
-			update();
-			System.out.println("solving" + MBoxPanel.isImported());
+			if(Ctrl.isImported()) {
+				
+				System.out.println("solvingeditb4update");
+				update();
+				System.out.println("solvingedit" + Ctrl.isImported());
+
+				DBox D = DrawingPanel.getD();
+				
+				System.out.println("depart"+ D.getLabel() + D.getX() + D.getY());
+				ABox A = m.findEnd();
+				System.out.println("arrivee"+ A.getLabel() + A.getX() + A.getY());
+				/*System.exit(0);*/
+				Previous pr = Dijkstra.dijkstra(m, D);
+				System.out.println("Dijkstra is good edit");
+				solutionPath = m.traceBack(A, D, pr);
+				Ctrl.setModified(false);
+				update();
+			}
 			
-			 for(int i =0; i< Maze.getWidth();i++) {
-			    	for(int j = 0; j<Maze.getDepth();j++) {
-			    		
-			    		System.out.print(Maze.getMaze()[j][i].getLabel());
-			    		
-			    	}
-			    }
-			 for(int i =0; i< Maze.getWidth();i++) {
-			    	for(int j = 0; j<Maze.getDepth();j++) {
-			    		
-			    		System.out.print(Maze.getMaze()[i][j]);
-			    		
-			    	}
-			    }
-			DBox D = DrawingPanel.getD();
-			
-			System.out.println("depart"+ D.getLabel() + D.getX() + D.getY());
-			ABox A = m.findEnd();
-			System.out.println("arrivee"+ A.getLabel() + A.getX() + A.getY());
-			/*System.exit(0);*/
-			Previous pr = Dijkstra.dijkstra(m, D);
-			System.out.println("Dijkstra is good");
-			solutionPath = m.traceBack(A, D, pr);
-			WallButton.setWallsSelection(false);
-			update();
-			
+			else {
+				System.out.println("boucle");
+				m = new Maze(10,10);
+				update();
+				System.out.println("solving" + Ctrl.isImported());
+
+				DBox D = DrawingPanel.getD();
+				
+				System.out.println("depart"+ D.getLabel() + D.getX() + D.getY());
+				ABox A = m.findEnd();
+				System.out.println("arrivee"+ A.getLabel() + A.getX() + A.getY());
+				/*System.exit(0);*/
+				Previous pr = Dijkstra.dijkstra(m, D);
+				System.out.println("Dijkstra is good");
+				solutionPath = m.traceBack(A, D, pr);
+				Ctrl.setModified(false);
+				update();				
+			}	
 		}
 	}
 	
@@ -111,13 +118,15 @@ public final class WindowModel extends Observable {
 			}
 			setMazeModel(m);
 			
+			System.out.println("importMaze update()");
 			update();
 		}
 	  }
 	
 	public void selectWall(MBoxPanel mboxPanel) {
 		// TODO Auto-generated method stub
-		update(mboxPanel);
+		System.out.println("selectwall");
+        update(mboxPanel);
 		
 	}
 	
@@ -132,13 +141,11 @@ public final class WindowModel extends Observable {
 	}
 	
 	
-	@SuppressWarnings("deprecation")
 	public void setChanged() {
 		
 		super.setChanged();
 		setModified(true);
 	}
-	@SuppressWarnings("deprecation")
 	public void update() {
 		
 		setChanged();
@@ -146,9 +153,9 @@ public final class WindowModel extends Observable {
 		notifyObservers();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void update(MBoxPanel mboxPanel) {
 		
+		System.out.println("model.update(mboxpanel)");
 		setChanged();
 		notifyObservers(mboxPanel);
 	}
@@ -180,6 +187,18 @@ public final class WindowModel extends Observable {
 
 	public void setModified(boolean modified) {
 		this.modified = modified;
+	}
+
+	public void resetMaze() {
+		// TODO Auto-generated method stub
+		setChanged();
+		notifyObservers();
+	}
+
+	public void resetPath() {
+		// TODO Auto-generated method stub
+		setChanged();
+		notifyObservers();
 	}
 
 

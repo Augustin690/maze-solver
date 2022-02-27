@@ -9,20 +9,26 @@ import Maze.EBox;
 import Maze.MBox;
 import Maze.Maze;
 import Maze.WBox;
+import model.Ctrl;
 import model.WindowModel;
 
 import java.awt.*;
-import java.lang.reflect.Parameter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class DrawingPanel extends JPanel {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	
 	private final MazeApp mazeApp;
 	private MBoxPanel mboxPanel;
 	private ArrayList<MBoxPanel> mboxPanelList = new ArrayList<MBoxPanel>();
 	private Maze mDrawn;
 	private static DBox D;
+	
 	
 	public DrawingPanel(MazeApp mazeApp) {
 		
@@ -44,20 +50,51 @@ public class DrawingPanel extends JPanel {
 	
 	public void notifyForUpdate(MBoxPanel mboxPanel) {
 		
+
+	     if(Ctrl.isResetActive()) {
+			
+			for(Component comp : getComponents()) {		
+				
+				MBoxPanel mboxPanel2 = (MBoxPanel) comp;
+				mboxPanel2.setLabelMPanel("E");
+				mboxPanel2.notifyForUpdate();
+				System.out.println("coucouuOLL");
+			}
+		}
+		
+
+		else{
+			
 			mboxPanel.notifyForUpdate();
+			System.out.println("e??");
+		}			
 		
 	}
 	
 	public void notifyForUpdate() {
 		
 		WindowModel model = mazeApp.getModel();
-		Maze m = model.getMazeModel();
+		Maze m = WindowModel.getMazeModel();
+		System.out.println("notifyforupdate()drawing");
 		
+		if(Ctrl.isResetPath()) {
+			
+			for(Component comp : getComponents()) {		
+				
+				System.out.println("reset path before displaying solution");
+				MBoxPanel mboxPanel1 = (MBoxPanel) comp;
+				if(mboxPanel1.getSolveColor()!= null /*&& mboxPanel1.getLabelMPanel()!= "W"*/) {
+					
+					mboxPanel1.notifyForUpdate();
+				}
+		
+			}
+		}
 
 		
-		if(MBoxPanel.isSolved()) {
+		else if(Ctrl.isSolved()) {
 			
-			if(WallButton.isWallsSelection() || StartButton.isStartSelection() || EndButton.isEndSelection()) {
+			if(Ctrl.isModified() || Ctrl.isStartSelection() || Ctrl.isEndSelection()) {
 				
 				MBox[][] mazeDrawn = Maze.getMaze();
 				
@@ -90,7 +127,6 @@ public class DrawingPanel extends JPanel {
 	        			System.out.println("i"+ i +"j"+j);
 	        			DBox dbox = new DBox(j,i);
 	        			mazeDrawn[j][i] = dbox ;
-	        			//mboxStock.get(j).add(i, new DBox(i,j));
 	        			D = (DBox) mazeDrawn[j][i];
 	        			
 	        			} 
@@ -109,9 +145,9 @@ public class DrawingPanel extends JPanel {
 					System.out.print("k:"+ k);
 					
 
-				WallButton.setWallsSelection(false);
-				StartButton.setStartSelection(false);
-				EndButton.setEndSelection(false);
+				Ctrl.setWallsSelection(false);
+				Ctrl.setStartSelection(false);
+				Ctrl.setEndSelection(false);
 				
 				}
 			}
@@ -123,6 +159,7 @@ public class DrawingPanel extends JPanel {
 					if(sPath != null) {
 					    if(label.contentEquals("E") && sPath.contains(x)){
 					    	MBoxPanel mboxPanel = (MBoxPanel) getComponent(mboxList.indexOf(x));
+					    	System.out.print(mboxPanel.getLabelMPanel());
 					    	mboxPanel.notifyForUpdate(); 
 					    	System.out.println("coucou");
 					    	
@@ -132,7 +169,7 @@ public class DrawingPanel extends JPanel {
 			}
 		}
 		
-		if(MBoxPanel.isImported()) {
+		else if(Ctrl.isImported()) {
 			
 			ArrayList<VertexInterface> mboxList = m.getAllVertices2();
 			
@@ -143,8 +180,10 @@ public class DrawingPanel extends JPanel {
 			    mboxPanel.setLabelMPanel(label);
 			    mboxPanel.notifyForUpdate();
 			    }
-			}
+			
+	
 		}
+	}
 	
 	public MBoxPanel getMBoxPanel() {
 		

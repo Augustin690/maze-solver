@@ -2,25 +2,22 @@ package GUI;
 
 import javax.swing.JMenuItem;
 
-import Dijkstra.Dijkstra;
-import Dijkstra.Previous;
-import Dijkstra.VertexInterface;
-import Maze.ABox;
-import Maze.DBox;
-import Maze.Maze;
+import model.Ctrl;
 
-import java.awt.Color;
 import java.awt.event.*;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 
 public class SolveItem extends JMenuItem implements ActionListener {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private final MazeApp mazeApp;
 	
 	public SolveItem(MazeApp mazeApp) {
 		
-		super("                                                       Solve");
+		super("solve");
 		this.mazeApp = mazeApp;
 		addActionListener(this);
 	}
@@ -28,10 +25,18 @@ public class SolveItem extends JMenuItem implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		MBoxPanel.setSolved(true);
+		Ctrl.setSolved(true);
+		Ctrl.setWallsSelection(false);
+		System.out.println("solvingItem");
+		Ctrl.setResetPath(true);
+		System.out.println("model.resetPath()" + Ctrl.isResetPath()	);
+		mazeApp.getModel().resetPath();
+		Ctrl.setResetPath(false);
+		System.out.println("model.solveMaze()");
+		/*System.exit(0);*/
 		mazeApp.getModel().solveMaze();
-		MBoxPanel.setSolved(false);
-		
+		Ctrl.setSolved(false);
+		Ctrl.setWallsSelection(false);
 	}
 
 }

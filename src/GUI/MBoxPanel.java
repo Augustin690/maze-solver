@@ -3,7 +3,8 @@ package GUI;
 import javax.swing.JPanel;
 
 import Maze.MBox;
-import model.WindowModel;
+import model.Ctrl;
+import model.*;
 
 import java.awt.* ;
 import java.awt.event.*;
@@ -15,12 +16,10 @@ public class MBoxPanel extends JPanel implements MouseListener {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	
 	private final MazeApp mazeApp;
 	private String labelMPanel = "E";
-	private MBox mbox;
-	private static boolean imported = false;
-	private static boolean solved = false;
+	private Color solveColor = null;
+
 	
 	public MBoxPanel(MazeApp mazeApp) {
 		
@@ -57,34 +56,40 @@ public class MBoxPanel extends JPanel implements MouseListener {
 	public void refresh() {
 		WindowModel model = mazeApp.getModel();
 		
-		if(solved) {
+		if(Ctrl.isSolved()) {
 			
-			setBackground(Color.cyan);
+			setSolveColor(Color.CYAN);
+			setBackground(solveColor);
 			
 		}
 		
-		if(WallButton.isWallsSelection()) {
+		else if(Ctrl.isWallsSelection() && !Ctrl.isResetActive() && !Ctrl.isStartSelection() && !Ctrl.isEndSelection() && !Ctrl.isRemoveStrt()) {
 			
 			setLabelMPanel("W");
 			/*mbox.setLabel("W");*/
-			System.out.println("helloooooo");
+			System.out.println("helloooooo78");
 		}
 		
-		if(StartButton.isStartSelection()) {
+		else if(Ctrl.isStartSelection()) {
 			
 			setLabelMPanel("D");
 			System.out.println("hellooooooDD");
 		}
 		
-		if(EndButton.isEndSelection()) {
+		else if(Ctrl.isEndSelection()) {
 			
 			setLabelMPanel("A");
 			System.out.println("hellooooooAAA");
 		}
 		
-		if(imported || WallButton.isWallsSelection() || StartButton.isStartSelection() || EndButton.isEndSelection() ) {
+		else if (Ctrl.isRemoveStrt()) {
 			
-			if(!solved) {
+			setLabelMPanel("E");
+		}
+		
+		if(Ctrl.isImported() || Ctrl.isWallsSelection() || Ctrl.isStartSelection() || Ctrl.isEndSelection() || Ctrl.isResetActive() || Ctrl.isRemoveStrt() || Ctrl.isResetPath()) {
+			
+			if(!Ctrl.isSolved() || Ctrl.isResetPath()) {
 			
                  if(labelMPanel == "A") {
 				
@@ -99,15 +104,17 @@ public class MBoxPanel extends JPanel implements MouseListener {
                  if(labelMPanel == "W") {
 				
 				setBackground(Color.GREEN);
+				System.out.println("hello7");
 				}
-                 System.out.println("hello");
+                 
                  
                  if(labelMPanel == "E") {
-				
-				setBackground(Color.darkGray);
+                	 
+                	 System.out.println("resetting");
+                	 setBackground(Color.darkGray);
 				}
 			}
-           }
+          }
 		
 	}
 	
@@ -124,49 +131,40 @@ public class MBoxPanel extends JPanel implements MouseListener {
 	public void setLabelMPanel(String labelMPanel) {
 		this.labelMPanel = labelMPanel;
 	}
-	
-	public static boolean isImported() {
-		
-		return imported;
-	}
-	
-	public static void setImported(boolean imported) {
-		
-		MBoxPanel.imported = imported;
-	}
-
-	public static boolean isSolved() {
-		return solved;
-	}
-
-	public static void setSolved(boolean solved) {
-		MBoxPanel.solved = solved;
-	}
 
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		MBoxPanel mboxPanel = (MBoxPanel) e.getSource();
-		if(WallButton.isWallsSelection()) {
+		String labelMPanel = mboxPanel.getLabelMPanel();
+		
+		if(Ctrl.isWallsSelection()) {
 			
-			mazeApp.getModel().selectWall(mboxPanel);
 			System.out.println("selecting wall");
-			
+			mazeApp.getModel().selectWall(mboxPanel);		
 		}
-		if(StartButton.isStartSelection()) {
+		if(Ctrl.isStartSelection()) {
 			
+			System.out.println("selecting start");
 			mazeApp.getModel().selectStart(mboxPanel);
-			StartButton.setStartSelection(false);
+			Ctrl.setStartSelection(false);
 		}
 		
-		if(EndButton.isEndSelection()) {
+		if(Ctrl.isEndSelection()) {
 			
+			System.out.println("selecting end");
 			mazeApp.getModel().selectEnd(mboxPanel);
-			EndButton.setEndSelection(false);
+			Ctrl.setEndSelection(false);
+		}
+		if(labelMPanel == "D") {
+			
+			System.out.println("removingstart");
+			Ctrl.setRemoveStrt(true);
+			mazeApp.getModel().update(mboxPanel);
+			Ctrl.setRemoveStrt(false);
 		}
 	}
-
 
 	@Override
 	public void mousePressed(MouseEvent e) {
@@ -174,13 +172,11 @@ public class MBoxPanel extends JPanel implements MouseListener {
 		
 	}
 
-
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -188,11 +184,20 @@ public class MBoxPanel extends JPanel implements MouseListener {
 		
 	}
 
-
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
+
+	public Color getSolveColor() {
+		return solveColor;
+	}
+
+
+	public void setSolveColor(Color solveColor) {
+		this.solveColor = solveColor;
+	}
+
 }

@@ -14,14 +14,14 @@ public class Maze
 
   implements GraphInterface {
 
-	private static int width;
 	private static int depth;
+	private static int width;
 	private static MBox[][] maze;
 	
 	public Maze(int depth, int width) {
 		Maze.depth = depth;
 		Maze.width = width;
-		Maze.maze = new MBox[depth][width];
+		Maze.maze = new MBox[width][depth];
 	}
 	
 
@@ -29,7 +29,7 @@ public class Maze
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		for (int i=0; i<width;i++) {
 			for (int j=0;j<depth;j++) {
-				MBox boxij = maze[j][i];
+				MBox boxij = maze[i][j];
 				arrays.add(boxij);
 				/*String label = maze[j][i].getLabel();
 				System.out.println(label);*/
@@ -121,13 +121,13 @@ public class Maze
 		
         Reader reader = new FileReader(fileName);
         BufferedReader br = new BufferedReader(reader);  
-        maze = new MBox[depth][width];
+        maze = new MBox[width][depth];
         
-        for(int j =0; j<width;j++) {
+        for(int j =0; j<depth;j++) {
       
         	String line = br.readLine();
         	
-        	for(int i = 0; i<depth;i++) {
+        	for(int i = 0; i<width;i++) {
         		
         		char label = line.charAt(i);
         		
@@ -151,21 +151,45 @@ public class Maze
         }
         
     }
+	
+	public static ArrayList<Integer> readingFile(String fileName) throws IOException {
+		
+		String st;
+		int k =0;
+		int l = 0;
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+			
+			while ((st = br.readLine()) != null) {
+				System.out.println(st);
+				l = st.length();
+				k++;
+			}
+
+			System.out.println("width: " + l);
+			System.out.println("depth: " + k);
+			list.add(k);
+			list.add(l);
+			
+			return list;
+		}
+	}
 
 	
 	public final void saveToTextFile(String fileName, ArrayList<VertexInterface> list) throws IOException, MazeReadingException {  //method that will save the Maze into a text file "fileName"
 		PrintWriter pw = null;
 		try {
 			pw = new PrintWriter(fileName);
-			for(int i = 0; i < Maze.width; i++) {
-			   for(int j =0; j < Maze.depth; j++) {
-				    String label = maze[j][i].getLabel();
+			for(int j = 0; j < Maze.depth; j++) {
+			   for(int i =0; i < Maze.width; i++) {
+				    String label = maze[i][j].getLabel();
 				    if(list != null) {
-					    if(label.contentEquals("E") && list.contains(maze[j][i])){
+					    if(label.contentEquals("E") && list.contains(maze[i][j])){
 					    	pw.print("+");  	
 					    }
 					    else {
-					    	pw.print(maze[j][i].getLabel());
+					    	pw.print(maze[i][j].getLabel());
 					    }
 				    }
 				    else {
@@ -191,9 +215,9 @@ public class Maze
 		DBox start = null;
 		for(int i = 0; i < Maze.width; i++) {
 			   for(int j =0; j < Maze.depth; j++) {
-	            	String label= maze[j][i].getLabel();
+	            	String label= maze[i][j].getLabel();
 	    			if(label.contentEquals("D")) {
-	    				start = (DBox) maze[j][i];
+	    				start = (DBox) maze[i][j];
 	    				}
 				}	
 	}
@@ -204,9 +228,9 @@ public class Maze
 		ABox end = null;
 		for(int i = 0; i < Maze.width; i++) {
 			   for(int j =0; j < Maze.depth; j++) {
-	            	String label= maze[j][i].getLabel();
+	            	String label= maze[i][j].getLabel();
 	    			if(label.contentEquals("A")) {
-	    				end = (ABox) maze[j][i];
+	    				end = (ABox) maze[i][j];
 	    				}
 				}	
 	}

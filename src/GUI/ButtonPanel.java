@@ -17,6 +17,8 @@ public class ButtonPanel extends JPanel {
 	private WallButton wallButton;
 	private StartButton startButton;
 	private EndButton endButton;
+	private ResetButton resetButton;
+	
 	
 	public ButtonPanel(MazeApp mazeApp) {
 		
@@ -25,8 +27,7 @@ public class ButtonPanel extends JPanel {
 		add(setWallButton(new WallButton(mazeApp)));
 		add(setStartButton(new StartButton(mazeApp)));
 		add(setEndButton(new EndButton(mazeApp)));
-		
-		
+		add(setResetButton(new ResetButton(mazeApp)));
 	}
 
 	public WallButton getWallButton() {
@@ -58,12 +59,22 @@ public class ButtonPanel extends JPanel {
 
 	public void notifyForUpdate(MBoxPanel mboxPanel) {
 		// TODO Auto-generated method stub
-		wallButton.notifyForUpdate(mboxPanel);
+		/*wallButton.notifyForUpdate(mboxPanel);
 		startButton.notifyForUpdate(mboxPanel);
-		endButton.notifyForUpdate(mboxPanel);
-		
+		endButton.notifyForUpdate(mboxPanel);*/
 		
 	}
+
+	public ResetButton getResetButton() {
+		return resetButton;
+	}
+
+	public ResetButton setResetButton(ResetButton resetButton) {
+		this.resetButton = resetButton;
+		return resetButton;
+	}
+
+
 	
 	
 	

@@ -4,16 +4,22 @@ import javax.swing.*;
 
 public class MenuBar extends JMenuBar {
 	
-	private FileMenu file;
-	private SolveItem solve;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private final FileMenu fileMenu;
+	private final  SolveMenu solveMenu;
+	private final InfoMenu infoMenu;
 	
 	public MenuBar(MazeApp mazeApp) {
 		
 		super();
 				
-		add(file = new FileMenu(mazeApp));
-		add(solve = new SolveItem(mazeApp));
-			
+		add(fileMenu = new FileMenu(mazeApp));
+		add(solveMenu = new SolveMenu(mazeApp));
+		add(infoMenu = new InfoMenu(mazeApp));
 	}
 
 }
