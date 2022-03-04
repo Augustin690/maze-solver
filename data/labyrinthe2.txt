@@ -8,3 +8,20 @@ EWEEWEWEAE
 EWEWWEWEEE
 EWEEWEEEEE
 EEWEEEEEEE
+
+/*private JLabel image = new JLabel(new ImageIcon("data/BrickWall.jpg"));
+	ImageIcon imageIcon = new ImageIcon("data/BrickWall.jpg");
+	int width = imageIcon.getIconWidth() / 2;
+	int height = imageIcon.getIconHeight() / 2;
+	Image scaled = scaleImage(imageIcon.getImage(), width, height);
+	
+	private Image scaleImage(Image image, int w, int h) {
+
+	    Image scaled = image.getScaledInstance(w+4, h+12, Image.SCALE_REPLICATE);
+
+	    return scaled;
+	}
+	
+	ImageIcon scaledIcon = new ImageIcon(scaled);
+
+	JLabel newLabel = new JLabel(scaledIcon);*/

@@ -35,10 +35,11 @@ public class DrawingPanel extends JPanel {
 		super();
 		
 		this.mazeApp = mazeApp;
+		WindowModel model = mazeApp.getModel();
 		
 		setBackground(Color.lightGray);
 		setPreferredSize(new Dimension(256,256));
-		setLayout(new GridLayout(10,10,2,2));
+		setLayout(new GridLayout(model.getDepth(),model.getWidth(),2,2));
 		for(int i=0;i<10;i++) {
 			for(int j=0;j<10;j++) {
 				add(mboxPanel = new MBoxPanel(mazeApp));
@@ -50,7 +51,10 @@ public class DrawingPanel extends JPanel {
 	
 	public void notifyForUpdate(MBoxPanel mboxPanel) {
 		
-
+		WindowModel model = this.mazeApp.getModel();
+		setLayout(new GridLayout(model.getDepth(),model.getWidth(),2,2));
+		updateUI();
+		
 	     if(Ctrl.isResetActive()) {
 			
 			for(Component comp : getComponents()) {		
@@ -172,7 +176,8 @@ public class DrawingPanel extends JPanel {
 		else if(Ctrl.isImported()) {
 			
 			ArrayList<VertexInterface> mboxList = m.getAllVertices2();
-			
+			System.out.println("importing");
+			/*System.exit(0);*/
 			for(VertexInterface x :mboxList) {
 				
 				String label = x.getLabel();

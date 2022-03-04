@@ -28,15 +28,21 @@ import Maze.WBox;
 public final class WindowModel extends Observable {
 	
 	private static Maze m;
-	private Color currentColor = Color.PINK;
+	private Color currentColor;
 	private boolean modified;
 	private MazeApp mazeApp;
 	private ArrayList<VertexInterface> solutionPath;
+	private int width ;
+	private int depth ;
+	
 	
 	public WindowModel(){
 		
 		super();
 		m = null;
+	    currentColor = Color.PINK;
+	    setWidth(10);
+	    setDepth(10);
 	
 	}
 	
@@ -103,11 +109,19 @@ public final class WindowModel extends Observable {
 		return solutionPath;
 	}
 	
-	public void importMaze(File file, MazeApp mazeApp) {
+	public void importMaze(File file, MazeApp mazeApp) throws IOException {
 		
 		if(file!= null) {
 			String fileName = file.getAbsolutePath();
-			Maze m = new Maze(10,10);
+			
+			ArrayList<Integer> dimensions = Maze.readingFile(fileName);
+			int d = dimensions.get(0);
+			int w = dimensions.get(1);
+			setWidth(w);
+			setDepth(d);
+			update(new MBoxPanel(mazeApp));
+			
+			Maze m = new Maze(d,w);
 			
 			try {
 				m.initFromTextFile(fileName);
@@ -199,6 +213,22 @@ public final class WindowModel extends Observable {
 		// TODO Auto-generated method stub
 		setChanged();
 		notifyObservers();
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getDepth() {
+		return depth;
+	}
+
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 
 

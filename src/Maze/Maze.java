@@ -27,8 +27,9 @@ public class Maze
 
 	public static ArrayList<VertexInterface> getAllVertices() {             //returns the list of all the vertices (Mboxes) that the maze contains
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
-		for (int i=0; i<width;i++) {
-			for (int j=0;j<depth;j++) {
+		for (int j=0;j<depth;j++) {
+			for (int i=0; i<width;i++) {
+			 
 				MBox boxij = maze[i][j];
 				arrays.add(boxij);
 				/*String label = maze[j][i].getLabel();

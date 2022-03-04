@@ -7,6 +7,7 @@ import model.Ctrl;
 
 import java.awt.event.*;
 import java.io.File;
+import java.io.IOException;
 
 public class ImportItem extends JMenuItem implements ActionListener {
 
@@ -38,7 +39,12 @@ public class ImportItem extends JMenuItem implements ActionListener {
 			Ctrl.setImported(true);
 			System.out.println(Ctrl.isImported());
 		}
-		mazeApp.getModel().importMaze(file,mazeApp);
+		try {
+			mazeApp.getModel().importMaze(file,mazeApp);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println("imported");
 
 	}
