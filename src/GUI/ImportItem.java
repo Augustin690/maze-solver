@@ -31,7 +31,7 @@ public class ImportItem extends JMenuItem implements ActionListener {
 		// TODO Auto-generated method stub
 		Ctrl.setWallsSelection(false);
 		System.out.println("OKi");
-		JFileChooser fc = new JFileChooser("/JavaMazeProject/data");
+		JFileChooser fc = new JFileChooser("C:\\Users\\Augustin\\eclipse-workspace\\JavaMazeProject\\data");
 		fc.showDialog(mazeApp, "IMPORT");
 		File file = fc.getSelectedFile();
 		if(file!=null) {

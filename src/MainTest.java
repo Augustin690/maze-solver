@@ -25,11 +25,11 @@ public class MainTest {
 
 	
 	public static void main(String[] args) throws IOException, MazeReadingException {
-		ArrayList<Integer> dimensions = Maze.readingFile("data/labyrintheplusdur");
+		ArrayList<Integer> dimensions = Maze.readingFile("data/Untitled 2");
 		int d = dimensions.get(0);
 		int w = dimensions.get(1);
 		Maze m = new Maze(d,w);
-		m.initFromTextFile("data/labyrintheplusdur");
+		m.initFromTextFile("data/Untitled 2");
 		DBox D = m.Start();
 		System.out.println(D.getLabel());
 		System.out.println(D.getX());
@@ -38,14 +38,14 @@ public class MainTest {
 		System.out.println("Dijkstra is good");
 		ABox A = m.findEnd();
 		ArrayList<VertexInterface> list = m.traceBack(A, D, pr);
-		Maze.readingFile("data/labyrintheplusdur");
-		m.saveToTextFile("data/labyrintheplusdursolved", list);
+		Maze.readingFile("data/Untitled 2");
+		m.saveToTextFile("data/Untitled2solved", list);
 		if(list!= null) {
 			System.out.println("here is the solution");
 		}
 		else {
 			System.out.println("no solution");
 		}
-		Maze.readingFile("data/labyrintheplusdursolved");
+		/*Maze.readingFile("data/labyrintheplusdursolved");*/
 	}
 }

@@ -40,8 +40,8 @@ public class DrawingPanel extends JPanel {
 		setBackground(Color.lightGray);
 		setPreferredSize(new Dimension(256,256));
 		setLayout(new GridLayout(model.getDepth(),model.getWidth(),2,2));
-		for(int i=0;i<10;i++) {
-			for(int j=0;j<10;j++) {
+		for(int i=0;i<model.getDepth();i++) {
+			for(int j=0;j<model.getWidth();j++) {
 				add(mboxPanel = new MBoxPanel(mazeApp));
 				mboxPanelList.add(mboxPanel);
 			}
@@ -51,9 +51,32 @@ public class DrawingPanel extends JPanel {
 	
 	public void notifyForUpdate(MBoxPanel mboxPanel) {
 		
-		WindowModel model = this.mazeApp.getModel();
-		setLayout(new GridLayout(model.getDepth(),model.getWidth(),2,2));
-		updateUI();
+		if(!Ctrl.isEndSelection() && !Ctrl.isStartSelection() && !Ctrl.isWallsSelection() &&!Ctrl.isModified()) {
+			
+			WindowModel model = this.mazeApp.getModel();
+			
+			
+			for(Component comp : getComponents()) {		
+				
+				MBoxPanel mboxPanell = (MBoxPanel) comp;
+				remove(mboxPanell);
+				mboxPanelList.remove(mboxPanel);
+
+			}
+			
+			setLayout(new GridLayout(model.getDepth(),model.getWidth(),2,2));
+			
+			for(int i=0;i<model.getDepth();i++) {
+				for(int j=0;j<model.getWidth();j++) {
+					add(mboxPanel = new MBoxPanel(mazeApp));
+					mboxPanelList.add(mboxPanel);
+				}
+			}
+			
+			
+			updateUI();
+		}
+
 		
 	     if(Ctrl.isResetActive()) {
 			
@@ -103,6 +126,7 @@ public class DrawingPanel extends JPanel {
 				MBox[][] mazeDrawn = Maze.getMaze();
 				
 				int k =-1;
+				int width = mazeApp.getModel().getWidth();
 						
 				for(Component comp : getComponents()) {
 					
@@ -111,12 +135,12 @@ public class DrawingPanel extends JPanel {
 					int i =0;
 					int j =0;
 					k++;
-					i = i + k/10 ;
-					j = k - 10*i ;
-					System.out.println("j"+ i +"i"+j);
+					i = i + k/width ; // y depth
+					j = k - width*i ; //x width
+					/*System.out.println("i"+ i +"j"+j);*/
 					
 					if (labelMPanel == "W" ) {
-						System.out.println("j"+ i +"i"+j);
+						System.out.println("i"+ i +"j"+j);
 						WBox wbox = new WBox(j,i);
 						mazeDrawn[j][i] = wbox ;
 					}	
@@ -144,8 +168,8 @@ public class DrawingPanel extends JPanel {
 					System.out.println(mazeDrawn[j][i].getLabel());
 					
 					
-					System.out.print("j:"+ i);
-					System.out.print("i:"+ j);
+					/*System.out.print("i:"+ i);
+					System.out.print("j:"+ j);*/
 					System.out.print("k:"+ k);
 					
 
