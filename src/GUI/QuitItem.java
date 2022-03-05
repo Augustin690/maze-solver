@@ -2,9 +2,12 @@ package GUI;
 
 import javax.swing.*;
 
+import Maze.MazeReadingException;
 import model.WindowModel;
 
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 
 public class QuitItem extends JMenuItem implements ActionListener {
 	
@@ -17,7 +20,6 @@ public class QuitItem extends JMenuItem implements ActionListener {
 		addActionListener(this);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	  public void actionPerformed(ActionEvent evt)
 	   {
@@ -34,7 +36,25 @@ public class QuitItem extends JMenuItem implements ActionListener {
 			   case JOptionPane.CANCEL_OPTION:
 				   return ;
 			   case JOptionPane.OK_OPTION:
-				   model.saveToFile() ;
+					JFileChooser fileChooser = new JFileChooser("C:\\Users\\Augustin\\eclipse-workspace\\JavaMazeProject\\data");
+					fileChooser.setDialogTitle("Specify a file to save");   
+					 
+					int userSelection = fileChooser.showSaveDialog(mazeApp);
+					 
+					if (userSelection == JFileChooser.APPROVE_OPTION) {
+					    File fileToSave = fileChooser.getSelectedFile();
+					    System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+					    try {
+							model.saveMaze(fileToSave);
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (MazeReadingException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				  
 				   break ;
 			   case JOptionPane.NO_OPTION:
 				   break ;

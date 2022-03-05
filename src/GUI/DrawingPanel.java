@@ -50,11 +50,9 @@ public class DrawingPanel extends JPanel {
 	
 	
 	public void notifyForUpdate(MBoxPanel mboxPanel) {
+		WindowModel model = this.mazeApp.getModel();
 		
 		if(!Ctrl.isEndSelection() && !Ctrl.isStartSelection() && !Ctrl.isWallsSelection() &&!Ctrl.isModified()) {
-			
-			WindowModel model = this.mazeApp.getModel();
-			
 			
 			for(Component comp : getComponents()) {		
 				
@@ -73,7 +71,6 @@ public class DrawingPanel extends JPanel {
 				}
 			}
 			
-			
 			updateUI();
 		}
 
@@ -91,6 +88,27 @@ public class DrawingPanel extends JPanel {
 		
 
 		else{
+			
+			int width = model.getWidth();
+			int k = mboxPanelList.indexOf(mboxPanel);
+			int i = k/width;
+			int j = k- width*i;
+			
+			if(Ctrl.isEndSelection()) {
+				
+				Maze.getMaze()[j][i] = new ABox(j,i);
+			}
+			
+			if(Ctrl.isStartSelection()) {
+				
+				Maze.getMaze()[j][i] = new DBox(j,i);
+				
+			}
+			
+			if(Ctrl.isWallsSelection()) {
+				
+				Maze.getMaze()[j][i] = new WBox(j,i);
+			}
 			
 			mboxPanel.notifyForUpdate();
 			System.out.println("e??");

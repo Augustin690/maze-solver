@@ -5,24 +5,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-import javax.swing.JFileChooser;
-
 import Dijkstra.Dijkstra;
 import Dijkstra.Previous;
 import Dijkstra.VertexInterface;
 import GUI.DrawingPanel;
-import GUI.EndButton;
 import GUI.MBoxPanel;
 import GUI.MazeApp;
-import GUI.StartButton;
-import GUI.WallButton;
 import Maze.ABox;
 import Maze.DBox;
 import Maze.EBox;
-import Maze.MBox;
 import Maze.Maze;
 import Maze.MazeReadingException;
-import Maze.WBox;
 
 @SuppressWarnings("deprecation")
 public final class WindowModel extends Observable {
@@ -30,7 +23,6 @@ public final class WindowModel extends Observable {
 	private static Maze m;
 	private Color currentColor;
 	private boolean modified;
-	private MazeApp mazeApp;
 	private ArrayList<VertexInterface> solutionPath;
 	private int width ;
 	private int depth ;
@@ -39,7 +31,13 @@ public final class WindowModel extends Observable {
 	public WindowModel(){
 		
 		super();
-		m = null;
+		m = new Maze(10,10);
+		for(int j = 0; j < Maze.getDepth(); j++) {
+			   for(int i =0; i < Maze.getWidth(); i++) {
+				   
+				   Maze.getMaze()[i][j] = new EBox(i,j);
+			   }
+		}
 	    currentColor = Color.PINK;
 	    setWidth(10);
 	    setDepth(10);
@@ -84,7 +82,7 @@ public final class WindowModel extends Observable {
 			
 			else {
 				System.out.println("boucle");
-				m = new Maze(10,10);
+				/*m = new Maze(10,10);*/
 				update();
 				System.out.println("solving" + Ctrl.isImported());
 
@@ -137,6 +135,14 @@ public final class WindowModel extends Observable {
 		}
 	  }
 	
+	public void saveMaze(File fileToSave) throws IOException, MazeReadingException {
+		// TODO Auto-generated method stub
+		String fileName = fileToSave.getAbsolutePath();
+		
+		m.saveToTextFile(fileName, solutionPath);
+		
+	}
+	
 	public void selectWall(MBoxPanel mboxPanel) {
 		// TODO Auto-generated method stub
 		System.out.println("selectwall");
@@ -183,13 +189,6 @@ public final class WindowModel extends Observable {
 		WindowModel.m = m;
 	}
 
-
-
-	public void saveToFile() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public Color getCurrentColor() {
 		// TODO Auto-generated method stub
 		return currentColor;
@@ -230,6 +229,5 @@ public final class WindowModel extends Observable {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-
 
 }

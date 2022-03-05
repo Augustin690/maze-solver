@@ -185,19 +185,19 @@ public class Maze
 			for(int j = 0; j < Maze.depth; j++) {
 			   for(int i =0; i < Maze.width; i++) {
 				    String label = maze[i][j].getLabel();
-				    if(list != null) {
-					    if(label.contentEquals("E") && list.contains(maze[i][j])){
+				    
+					    if(list !=null && label.contentEquals("E") && list.contains(maze[i][j])){
 					    	pw.print("+");  	
 					    }
+				    
 					    else {
 					    	pw.print(maze[i][j].getLabel());
 					    }
-				    }
-				    else {
+				  //  }
+				    /*else {
 				    	System.out.println("no solution");
 				    	return;
-				    }
-
+				    }*/
 
 				}
 			   pw.println();
