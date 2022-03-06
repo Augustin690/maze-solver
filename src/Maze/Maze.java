@@ -229,6 +229,7 @@ public class Maze
 		ABox end = null;
 		for(int i = 0; i < Maze.width; i++) {
 			   for(int j =0; j < Maze.depth; j++) {
+				   System.out.println("i" + i + "j" + j);
 	            	String label= maze[i][j].getLabel();
 	    			if(label.contentEquals("A")) {
 	    				end = (ABox) maze[i][j];
@@ -300,6 +301,17 @@ public class Maze
 	
 	public static int getDepth() {
 		return depth;
+	}
+	
+	public static void setWidth(int width) {
+		
+		Maze.width = width;
+		
+	}
+	
+	public static void setDepth(int depth) {
+		
+		Maze.depth = depth;
 	}
 }
 

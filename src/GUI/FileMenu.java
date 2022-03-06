@@ -13,6 +13,7 @@ public class FileMenu extends JMenu {
 	private final QuitItem quit;
 	private final SaveItem save;
 	private final ImportItem importItem;
+	private final NewItem newItem;
 	
 	public FileMenu(MazeApp mazeApp) {
 		
@@ -22,6 +23,7 @@ public class FileMenu extends JMenu {
 		add(quit = new QuitItem(mazeApp));
 		add(save = new SaveItem(mazeApp));
 		add(importItem = new ImportItem(mazeApp));
+		add(newItem = new NewItem(mazeApp));
 
 	}
 

@@ -220,6 +220,7 @@ public final class WindowModel extends Observable {
 
 	public void setWidth(int width) {
 		this.width = width;
+		Maze.setWidth(width);
 	}
 
 	public int getDepth() {
@@ -228,6 +229,7 @@ public final class WindowModel extends Observable {
 
 	public void setDepth(int depth) {
 		this.depth = depth;
+		Maze.setDepth(depth);
 	}
 
 }

@@ -12,6 +12,8 @@ public class Ctrl {
 	private static boolean removeStrt = false;
 	private static boolean resetPath = false;
 	
+	
+	
 	public static boolean isImported() {
 		return imported;
 	}

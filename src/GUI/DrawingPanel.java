@@ -44,6 +44,7 @@ public class DrawingPanel extends JPanel {
 			for(int j=0;j<model.getWidth();j++) {
 				add(mboxPanel = new MBoxPanel(mazeApp));
 				mboxPanelList.add(mboxPanel);
+				System.out.println(mboxPanelList.size());
 			}
 		}
 	}
@@ -52,13 +53,14 @@ public class DrawingPanel extends JPanel {
 	public void notifyForUpdate(MBoxPanel mboxPanel) {
 		WindowModel model = this.mazeApp.getModel();
 		
-		if(!Ctrl.isEndSelection() && !Ctrl.isStartSelection() && !Ctrl.isWallsSelection() &&!Ctrl.isModified()) {
+		if(!Ctrl.isEndSelection() && !Ctrl.isStartSelection() && !Ctrl.isWallsSelection() &&!Ctrl.isModified() &&!Ctrl.isRemoveStrt()) {
 			
 			for(Component comp : getComponents()) {		
 				
 				MBoxPanel mboxPanell = (MBoxPanel) comp;
 				remove(mboxPanell);
-				mboxPanelList.remove(mboxPanel);
+				mboxPanelList.remove(mboxPanell);
+				System.out.println("all removed" + mboxPanelList.size());
 
 			}
 			
@@ -68,6 +70,7 @@ public class DrawingPanel extends JPanel {
 				for(int j=0;j<model.getWidth();j++) {
 					add(mboxPanel = new MBoxPanel(mazeApp));
 					mboxPanelList.add(mboxPanel);
+					System.out.println( mboxPanelList.size());
 				}
 			}
 			
@@ -89,10 +92,12 @@ public class DrawingPanel extends JPanel {
 
 		else{
 			
+			System.out.println(mboxPanelList.size());
 			int width = model.getWidth();
 			int k = mboxPanelList.indexOf(mboxPanel);
 			int i = k/width;
-			int j = k- width*i;
+			int j = k - (width*i);
+			System.out.println("k:"+ k +"i:" + i + "j:" + j);
 			
 			if(Ctrl.isEndSelection()) {
 				

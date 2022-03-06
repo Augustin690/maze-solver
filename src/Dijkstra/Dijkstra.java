@@ -6,6 +6,12 @@ import java.util.Map.Entry;
 
 public class Dijkstra {
 
+	/**
+	 * 
+	 * @param g 
+	 * @param r
+	 * @return
+	 */
 	public static Previous dijkstra(GraphInterface g, VertexInterface r) {
 		ASet aset = new ASet();
 		Pi pi = new Pi();
@@ -33,6 +39,16 @@ public class Dijkstra {
 		return minValue; 
 	  } 
 	
+	
+	/**
+	 * yes
+	 * @param g vamos
+	 * @param r
+	 * @param aset
+	 * @param pi
+	 * @param previous
+	 * @return
+	 */
 	private static Previous dijkstra(GraphInterface g, 
 			                           VertexInterface r, 
 			                           ASet aset, 

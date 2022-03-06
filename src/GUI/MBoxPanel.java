@@ -50,7 +50,6 @@ public class MBoxPanel extends JPanel implements MouseListener {
 	
 	public void MouseEntered(MouseEvent e) {
 		
-		setBackground(Color.GREEN);
 	}
 	
 	public void refresh() {
@@ -86,6 +85,7 @@ public class MBoxPanel extends JPanel implements MouseListener {
 			
 			setLabelMPanel("E");
 		}
+		
 		
 		if(Ctrl.isImported() || Ctrl.isWallsSelection() || Ctrl.isStartSelection() || Ctrl.isEndSelection() || Ctrl.isResetActive() || Ctrl.isRemoveStrt() || Ctrl.isResetPath()) {
 			
@@ -157,13 +157,15 @@ public class MBoxPanel extends JPanel implements MouseListener {
 			mazeApp.getModel().selectEnd(mboxPanel);
 			Ctrl.setEndSelection(false);
 		}
-		if(labelMPanel == "D") {
+		if(labelMPanel != "E") {
 			
-			System.out.println("removingstart");
+			System.out.println("creating empty box");
 			Ctrl.setRemoveStrt(true);
+			Ctrl.setModified(true);
 			mazeApp.getModel().update(mboxPanel);
 			Ctrl.setRemoveStrt(false);
 		}
+	
 	}
 
 	@Override

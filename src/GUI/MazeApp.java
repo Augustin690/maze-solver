@@ -7,9 +7,15 @@ import java.util.Observer;
 import javax.swing.*;
 
 import Maze.MBox;
+import Maze.Maze;
 import model.Ctrl;
 import model.WindowModel;
 
+/**
+ * 
+ * @author Augustin
+ * vamos a la playa
+ */
 @SuppressWarnings("deprecation")
 public class MazeApp extends JFrame implements Observer {
 	
@@ -34,11 +40,22 @@ public class MazeApp extends JFrame implements Observer {
 		menuBar = new MenuBar(this);
 		setJMenuBar(menuBar);
 		
+		String inputWidth = JOptionPane.showInputDialog("enter number of columns");
+		int w = Integer.parseInt(inputWidth);
+		windowModel.setWidth(w);
+		
+		String inputDepth = JOptionPane.showInputDialog("enter number of rows");
+		int d = Integer.parseInt(inputDepth);
+		windowModel.setDepth(d);
+		
+		WindowModel.getMazeModel().setMaze(new MBox[w][d]);
+		
 		//content creation
 		windowPanel = new WindowsPanel(this);
 		setContentPane(windowPanel);
 		JOptionPane.showMessageDialog(this, "if you are using that program for the first time do not hesitate \n "
 				+ "to go to the info Menu to learn on how to use this program");
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
