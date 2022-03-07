@@ -44,6 +44,9 @@ public final class WindowModel extends Observable {
 	
 	}
 	
+	/**
+	 * Solves the Maze if possible thanks to dijkstra's algorithm and then update the view 
+	 */
 	public void solveMaze() {
 		
 		if(Ctrl.isImported() && !Ctrl.isModified()) {
@@ -107,6 +110,12 @@ public final class WindowModel extends Observable {
 		return solutionPath;
 	}
 	
+	/**
+	 * Imports a maze from a text file and displays it
+	 * @param file the text file
+	 * @param mazeApp the view of the moddel
+	 * @throws IOException
+	 */
 	public void importMaze(File file, MazeApp mazeApp) throws IOException {
 		
 		if(file!= null) {
@@ -135,6 +144,12 @@ public final class WindowModel extends Observable {
 		}
 	  }
 	
+	/**
+	 * Saves a maze displayed on the GUI to a text file
+	 * @param fileToSave the name of the text file that will contains the representation of the maze
+	 * @throws IOException
+	 * @throws MazeReadingException
+	 */
 	public void saveMaze(File fileToSave) throws IOException, MazeReadingException {
 		// TODO Auto-generated method stub
 		String fileName = fileToSave.getAbsolutePath();

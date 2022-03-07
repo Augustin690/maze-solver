@@ -30,8 +30,7 @@ public class GeneralInfoItem extends JMenuItem implements ActionListener {
 				+ " that allow you to create a start, a finish, and walls");
 		JOptionPane.showMessageDialog(mazeApp, "To do so, you have a 'File' Menu at the top left corner of the menu bar that allows you \n "
 				+ "to import a Maze and then display it, save it to a new .txt file and also quit the program \n"
-				+ "you will find more info in this very 'Info' Menu with sections dedicated to each important \n"
-				+ "feature of this program. Enjoy! ");
+				+ " Enjoy! ");
 	}
 
 }

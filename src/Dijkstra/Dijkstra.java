@@ -2,15 +2,15 @@ package Dijkstra;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map.Entry;
+
 
 public class Dijkstra {
 
 	/**
-	 * 
-	 * @param g 
-	 * @param r
-	 * @return
+	 * Implementing the Dijkstra algorithm: returns the shortest path from the root to every other vertex in a graph
+	 * @param g the graph 
+	 * @param r the root 
+	 * @return the previous hashtable that associates each vertex to its father when taking the shortest path starting from the root
 	 */
 	public static Previous dijkstra(GraphInterface g, VertexInterface r) {
 		ASet aset = new ASet();
@@ -21,6 +21,11 @@ public class Dijkstra {
 		
 	}
 	
+	/**
+	 * Returns the minimum value of an ArrayList of Integers
+	 * @param listPi the ArrayList of Integers
+	 * @return the minimum value
+	 */
 	public static int getMin1(ArrayList<Integer> listPi){ 
 		int size = listPi.size();
 		int minValue;
@@ -41,13 +46,13 @@ public class Dijkstra {
 	
 	
 	/**
-	 * yes
-	 * @param g vamos
-	 * @param r
-	 * @param aset
-	 * @param pi
-	 * @param previous
-	 * @return
+	 * Implementing the Dijkstra algorithm  returns the shortest path from the root to every other vertex in a graph
+	 * @param g the graph
+	 * @param r the root
+	 * @param aset the set that contains the vertices that have been examined
+	 * @param pi hashtable that associates each vertex to the length of the shortest path from it to the root  
+	 * @param previous hashtable of vertices
+	 * @return the previous hashtable that associates each vertex to its father when taking the shortest path starting from the root
 	 */
 	private static Previous dijkstra(GraphInterface g, 
 			                           VertexInterface r, 
@@ -83,7 +88,6 @@ public class Dijkstra {
 		for (int j=0 ; j<= n-1 ; j++) {
 			System.out.println("j:"+j);
 			System.out.println("A"+ A.toString());
-			/*System.out.println("Pi"+ pi.toString());*/
 			for(VertexInterface y: list) {
 				if(A.contains(y) == false  && g.isSuccessor(pivot,y,g) == true) {
 			          if (pi.get(pivot) + g.getWeight(pivot,y) < pi.get(y)) {
@@ -93,28 +97,17 @@ public class Dijkstra {
 			}
 
 			}
-			/*System.out.println("previous boucle:"+ previous.toString());*/ 
 			
-			/*
-			 *Créer une liste des éléments qui ne sont pas dans A 
-			System.out.println("pivalues" + pi.values().size()); * En même temps, créer une liste contenant les Pi de ces sommets
-			 * 
-			 * Apres trouver le minimum de ces pi, récupérer l'indice dans la liste avec lequel on récupère le sommet dans la première liste -> pivot
-			 */
 			ArrayList<Integer> listPi = new ArrayList<Integer>();
-			
-			/*Object[] array = pi.values().toArray();*/
-			
-			/*System.out.println("listnotinA" + listnotinA);*/
 
 			for(VertexInterface y: list) {
 				if(A.contains(y) == false) {
-					// pour min : regarder collections minimum
+					
 					listnotinA.add(y);
 				}
 
 			}
-			/*System.out.println(listnotinA);*/
+		
 			ArrayList<VertexInterface> toRemove = new ArrayList<VertexInterface>();
 			for(VertexInterface x: listnotinA) {
 			    	if(A.contains(x)) {
@@ -125,13 +118,6 @@ public class Dijkstra {
 		    for(VertexInterface y: listnotinA) {
 		    	listPi.add(pi.get(y));
 		    }
-		    
-		   /* ArrayList<Integer> toRemovePi = new ArrayList<Integer>();
-		    for(VertexInterface x: toRemove) {
-		    	toRemovePi.add(pi.get(x));
-		    }*/
-		    /*listPi.removeAll(toRemovePi);*/
-		    /*System.out.println(listPi);*/
 		    
 		    int min = getMin1(listPi);
 		    int minIndex;

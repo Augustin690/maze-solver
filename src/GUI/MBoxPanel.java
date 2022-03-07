@@ -52,9 +52,10 @@ public class MBoxPanel extends JPanel implements MouseListener {
 		
 	}
 	
+	/**
+	 * Updates the GUI according to what the model asks to do
+	 */
 	public void refresh() {
-		WindowModel model = mazeApp.getModel();
-		
 		if(Ctrl.isSolved()) {
 			
 			setSolveColor(Color.CYAN);

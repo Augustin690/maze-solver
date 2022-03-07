@@ -1,10 +1,6 @@
 package GUI;
 
-import java.awt.Component;
-
 import javax.swing.JPanel;
-
-import Maze.MBox;
 
 public class ButtonPanel extends JPanel {
 
@@ -58,11 +54,7 @@ public class ButtonPanel extends JPanel {
 	}
 
 	public void notifyForUpdate(MBoxPanel mboxPanel) {
-		// TODO Auto-generated method stub
-		/*wallButton.notifyForUpdate(mboxPanel);
-		startButton.notifyForUpdate(mboxPanel);
-		endButton.notifyForUpdate(mboxPanel);*/
-		
+		// TODO Auto-generated method stub	
 	}
 
 	public ResetButton getResetButton() {

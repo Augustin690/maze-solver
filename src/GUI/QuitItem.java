@@ -36,7 +36,7 @@ public class QuitItem extends JMenuItem implements ActionListener {
 			   case JOptionPane.CANCEL_OPTION:
 				   return ;
 			   case JOptionPane.OK_OPTION:
-					JFileChooser fileChooser = new JFileChooser("C:\\Users\\Augustin\\eclipse-workspace\\JavaMazeProject\\data");
+					JFileChooser fileChooser = new JFileChooser(/*"C:\\Users\\Augustin\\eclipse-workspace\\JavaMazeProject\\data"*/);
 					fileChooser.setDialogTitle("Specify a file to save");   
 					 
 					int userSelection = fileChooser.showSaveDialog(mazeApp);

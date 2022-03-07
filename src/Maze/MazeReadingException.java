@@ -14,9 +14,33 @@ public class MazeReadingException extends Exception {
 	public MazeReadingException(String fileName, int line,String message) {
 		
 		super(message);
-		this.fileName = fileName;
+		this.setFileName(fileName);
+		this.setMessage(message);
+		this.setLine(line);
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public int getLine() {
+		return line;
+	}
+
+	public void setLine(int line) {
 		this.line = line;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

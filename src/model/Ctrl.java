@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * Class that contains all the booleans needed to implement the GUI respecting the MVC 
+ * @author Augustin
+ *
+ */
 public class Ctrl {
 	
 	private static boolean imported = false;

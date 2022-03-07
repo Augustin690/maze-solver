@@ -2,7 +2,7 @@ package Maze;
 
 import Dijkstra.VertexInterface;
 
-public class MBox 
+public abstract class MBox 
 	implements VertexInterface {
 	
 	protected int x;
@@ -17,11 +17,14 @@ public class MBox
 		this.y = y;
 	}
 
+	/**
+	 * Constructor of the class MBox with given coordinates in the Maze
+	 * @param x the x coordinate (horizontal)
+	 * @param y the y coordinate (vertical)
+	 */
 	public MBox(int x, int y) {
 		this.x = x;
 		this.y = y;
-		
-		// Constructor for the type MBox, x and y are its coordinates in the Maze which is basically a matrix of MBox
 	}
 
 	public int getX() {

@@ -29,7 +29,10 @@ public class DrawingPanel extends JPanel {
 	private Maze mDrawn;
 	private static DBox D;
 	
-	
+	/**
+	 * Initializes a DrawingPanel which is a JPanel that will contain a graphic representation of the Maze with a Grid Layout 
+	 * @param mazeApp the Frame 
+	 */
 	public DrawingPanel(MazeApp mazeApp) {
 		
 		super();

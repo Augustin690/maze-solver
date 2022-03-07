@@ -22,7 +22,7 @@ public class SaveItem extends JMenuItem implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		JFileChooser fileChooser = new JFileChooser("C:\\Users\\Augustin\\eclipse-workspace\\JavaMazeProject\\data");
+		JFileChooser fileChooser = new JFileChooser(/*"C:\\Users\\Augustin\\eclipse-workspace\\JavaMazeProject\\data"*/);
 		fileChooser.setDialogTitle("Specify a file to save");   
 		 
 		int userSelection = fileChooser.showSaveDialog(mazeApp);

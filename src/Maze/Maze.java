@@ -25,6 +25,10 @@ public class Maze
 	}
 	
 
+	/**
+	 * Method that returns all of the vertices of the Maze
+	 * @return an ArrayList of VertexInterface containing all of the vertices (MBox) of the Maze
+	 */
 	public static ArrayList<VertexInterface> getAllVertices() {             //returns the list of all the vertices (Mboxes) that the maze contains
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		for (int j=0;j<depth;j++) {
@@ -32,15 +36,17 @@ public class Maze
 			 
 				MBox boxij = maze[i][j];
 				arrays.add(boxij);
-				/*String label = maze[j][i].getLabel();
-				System.out.println(label);*/
 			}
 		}
 		return arrays;
 	}
 
+
 	@Override
-	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {  //returns the list of the vertices that are accessible starting form  "vertex" (basically its neighbors that are not walls)
+	/**
+	 * Returns the list of the vertices that are accessible (not walls) starting form "vertex", a wall has no neighbors
+	 */
+	public ArrayList<VertexInterface> getSuccessors(VertexInterface vertex) {
 		ArrayList<VertexInterface> arrays = new ArrayList<VertexInterface>();
 		MBox box = (MBox)vertex ;
 		int x = box.getX();
@@ -118,45 +124,58 @@ public class Maze
 		}
 	}
 	
+	/**
+	 * Initializes the Maze from a text file that represents a maze 
+	 * @param fileName the name of the file
+	 * @throws IOException
+	 * @throws MazeReadingException
+	 */
 	public final void initFromTextFile(String fileName) throws IOException, MazeReadingException {  
 		
         Reader reader = new FileReader(fileName);
-        BufferedReader br = new BufferedReader(reader);  
-        maze = new MBox[width][depth];
-        
-        for(int j =0; j<depth;j++) {
-      
-        	String line = br.readLine();
-        	
-        	for(int i = 0; i<width;i++) {
-        		
-        		char label = line.charAt(i);
-        		
-        		if (label == 'W') {
-        			maze[i][j] = new WBox(i,j) ;
-        	         }
-        		else if (label == 'E') {
-        			maze[i][j] = new EBox(i,j) ; 
-        			} 
-        		else if (label == 'D') {
-        			maze[i][j] = new DBox(i,j) ;
-        			} 
-        		else if (label == 'A') {
-        			maze[i][j] = new ABox(i,j) ;
-        			}
-        		else {
-        			throw new MazeReadingException(fileName ,89,"invalid letter");
-        		}
-        	}
-                                                   
-        }
+        try (BufferedReader br = new BufferedReader(reader)) {
+			maze = new MBox[width][depth];
+			
+			for(int j =0; j<depth;j++) {
+     
+				String line = br.readLine();
+				
+				for(int i = 0; i<width;i++) {
+					
+					char label = line.charAt(i);
+					
+					if (label == 'W') {
+						maze[i][j] = new WBox(i,j) ;
+				         }
+					else if (label == 'E') {
+						maze[i][j] = new EBox(i,j) ; 
+						} 
+					else if (label == 'D') {
+						maze[i][j] = new DBox(i,j) ;
+						} 
+					else if (label == 'A') {
+						maze[i][j] = new ABox(i,j) ;
+						}
+					else {
+						throw new MazeReadingException(fileName ,89,"invalid letter");
+					}
+				}
+			                                           
+			}
+		}
         
     }
 	
+	/**
+	 * Reads a text file and displays it to the console, returns a 2-sized ArrayList that contains the width and depth of the file
+	 * @param fileName the name of the file to read
+	 * @return an ArrayList of Integers, the index 0 Int represents the depth, the index 1 the width
+	 * @throws IOException
+	 */
 	public static ArrayList<Integer> readingFile(String fileName) throws IOException {
 		
 		String st;
-		int k =0;
+		int k = 0;
 		int l = 0;
 		ArrayList<Integer> list = new ArrayList<Integer>();
 		
@@ -177,7 +196,9 @@ public class Maze
 		}
 	}
 
-	
+	/**
+	 *  Saves the current maze in the form of a text file
+	 */
 	public final void saveToTextFile(String fileName, ArrayList<VertexInterface> list) throws IOException, MazeReadingException {  //method that will save the Maze into a text file "fileName"
 		PrintWriter pw = null;
 		try {
@@ -193,12 +214,6 @@ public class Maze
 					    else {
 					    	pw.print(maze[i][j].getLabel());
 					    }
-				  //  }
-				    /*else {
-				    	System.out.println("no solution");
-				    	return;
-				    }*/
-
 				}
 			   pw.println();
 			   }
@@ -212,6 +227,10 @@ public class Maze
 		}
    }
 	
+	/**
+	 * Finds the start in a maze
+	 * @return the unique DBox of the maze
+	 */
 	public final DBox Start() {
 		DBox start = null;
 		for(int i = 0; i < Maze.width; i++) {
@@ -225,6 +244,10 @@ public class Maze
 		return start;
 	}
 	
+	/**
+	 * Finds the end of the maze
+	 * @return the unique ABox of the maze
+	 */
 	public final ABox findEnd() {
 		ABox end = null;
 		for(int i = 0; i < Maze.width; i++) {
@@ -238,7 +261,11 @@ public class Maze
 	}
 		return end;
 	}
+
 	@Override
+	/**
+	 * Returns wether a given Vertex is in a maze or not
+	 */
 	public boolean isInG(VertexInterface x) {
 		ArrayList<VertexInterface> list = 	Maze.getAllVertices();
 		return list.contains(x);
@@ -249,6 +276,13 @@ public class Maze
 		return width*depth;
 	}
 	
+	/**
+	 * Returns the shortest path between two vertices of the maze if there is one
+	 * @param x the first vertex
+	 * @param y the second vertex
+	 * @param pr hashtable that contains the shortest paths between all the vertices of the maze
+	 * @return an ArrayList of vertices (MBox) that represents the path between the two vertices
+	 */
 	public ArrayList<VertexInterface> traceBack(VertexInterface x, VertexInterface y,Previous pr) {
 		
 		ArrayList<VertexInterface> list = new ArrayList<VertexInterface>();
@@ -280,6 +314,9 @@ public class Maze
 	}
 
 	@Override
+	/**
+	 * Returns all the vertices (MBox) of the maze
+	 */
 	public ArrayList<VertexInterface> getAllVertices2() {
 		// TODO Auto-generated method stub
 		return Maze.getAllVertices();
